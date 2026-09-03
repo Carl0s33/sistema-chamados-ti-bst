@@ -19,9 +19,15 @@ class Chamado {
     Status status;
     ListaHistorico historico;
 
+    static string gerarSolicitanteAleatorio();
+    static string gerarDescricaoAleatoria();
+    static Categoria gerarCategoriaAleatoria();
+    static Prioridade gerarPrioridadeAleatoria();
+    static Status gerarStatusAleatorio();
+
     public:
     Chamado();
-    Chamado(int id, string solicitante, string descricao, Categoria categoria, Prioridade prioridade, Status status);
+    Chamado(int id);
 
     // Getters (marcados como const por não alterarem o estado do objeto)
     int getId() const;
