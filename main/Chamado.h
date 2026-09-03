@@ -4,6 +4,7 @@
 #include "enums/Categoria.h"
 #include "enums/Prioridade.h"
 #include "enums/Status.h"
+#include "ListaHistorico.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ class Chamado {
     Categoria categoria;
     Prioridade prioridade;
     Status status;
-    // Lista historico;
+    ListaHistorico historico;
 
     public:
     Chamado();
