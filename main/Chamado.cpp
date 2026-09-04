@@ -1,14 +1,18 @@
-#include "Chamado.h"
+#include "interface/Chamado.h"
+#include <random>
+#include <iostream>
 
 // Construtor Padrão
-Chamado::Chamado() 
-    : id(0), solicitante(""), descricao(""), 
-      categoria(Categoria::OUTROS), prioridade(Prioridade::BAIXA), status(Status::ABERTO) {}
+Chamado::Chamado() {}
 
 // Construtor Parametrizado utilizando Lista de Inicialização
-Chamado::Chamado(int id, string solicitante, string descricao, Categoria categoria, Prioridade prioridade, Status status)
-    : id(id), solicitante(solicitante), descricao(descricao), 
-      categoria(categoria), prioridade(prioridade), status(status) {}
+Chamado::Chamado(int id)
+    : id(id),
+      solicitante(),
+      descricao(gerarDescricaoAleatoria()),
+      categoria(gerarCategoriaAleatoria()),
+      prioridade(gerarPrioridadeAleatoria()),
+      status(gerarStatusAleatorio()) {}
 
 // --- GETTERS ---
 
@@ -16,7 +20,7 @@ int Chamado::getId() const {
     return id;
 }
 
-string Chamado::getSolicitante() const {
+Solicitante Chamado::getSolicitante() const {
     return solicitante;
 }
 
@@ -42,11 +46,9 @@ void Chamado::setId(int id) {
     this->id = id;
 }
 
-void Chamado::setSolicitante(const string& solicitante) {
-    this->solicitante = solicitante;
-}
 
-void Chamado::setDescricao(const string& descricao) {
+
+void Chamado::setDescricao( string& descricao) {
     this->descricao = descricao;
 }
 
@@ -60,4 +62,85 @@ void Chamado::setPrioridade(Prioridade prioridade) {
 
 void Chamado::setStatus(Status status) {
     this->status = status;
+}
+
+void Chamado::imprimir() const {
+    std::cout << "========================================" << std::endl;
+    std::cout << "               CHAMADO #" << id          << std::endl;
+    std::cout << "========================================" << std::endl;
+    std::cout << "Solicitante : " << solicitante.getNome() 
+              << " (Matrícula: " << solicitante.getMatricula() << ")" << std::endl;
+    std::cout << "Descrição   : " << descricao << std::endl;
+    std::cout << "Categoria   : " << categoriaParaTexto()  << std::endl;
+    std::cout << "Prioridade  : " << prioridadeParaTexto() << std::endl;
+    std::cout << "Status      : " << statusParaTexto()     << std::endl;
+    std::cout << "========================================" << std::endl;
+}
+
+
+
+string Chamado::gerarDescricaoAleatoria() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static const string descricoes[] = {
+        "Impressora não responde", "Sem acesso à rede local", 
+        "Erro ao atualizar o sistema", "Solicitação de novo periférico", "Falha de autenticação"
+    };
+    constexpr std::size_t quantidadeDescricoes =
+        sizeof(descricoes) / sizeof(descricoes[0]);
+    std::uniform_int_distribution<std::size_t> dist(0, quantidadeDescricoes - 1);
+    return descricoes[dist(gen)];
+}
+
+Categoria Chamado::gerarCategoriaAleatoria() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(
+        0, static_cast<int>(Categoria::OUTROS));
+    return static_cast<Categoria>(dist(gen));
+}
+
+Prioridade Chamado::gerarPrioridadeAleatoria() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(
+        0, static_cast<int>(Prioridade::CRITICA));
+    return static_cast<Prioridade>(dist(gen));
+}
+
+Status Chamado::gerarStatusAleatorio() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, 3); // Ajuste conforme a quantidade de itens do Enum Status
+    return static_cast<Status>(dist(gen));
+}
+
+
+// cast dos enums
+
+string Chamado::categoriaParaTexto() const {
+    switch (categoria) {
+        case Categoria::HARDWARE: return "Hardware";
+        case Categoria::SOFTWARE: return "Software";
+        case Categoria::REDE:     return "Rede";
+        default:                  return "Outros";
+    }
+}
+
+string Chamado::prioridadeParaTexto() const {
+    switch (prioridade) {
+        case Prioridade::BAIXA:   return "Baixa";
+        case Prioridade::MEDIA:   return "Média";
+        case Prioridade::ALTA:    return "Alta";
+        default:                  return "Crítica";
+    }
+}
+
+string Chamado::statusParaTexto() const {
+    switch (status) {
+        case Status::ABERTO:       return "Aberto";
+        case Status::EM_ANDAMENTO: return "Em Andamento";
+        case Status::RESOLVIDO:    return "Resolvido";
+        default:                   return "Fechado";
+    }
 }

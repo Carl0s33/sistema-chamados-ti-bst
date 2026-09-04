@@ -1,4 +1,4 @@
-#include "ListaHistorico.h"
+#include "interface/ListaHistorico.h"
 #include <iostream>
 
 ListaHistorico::ListaHistorico() : inicio(nullptr) {}
