@@ -1,5 +1,6 @@
 #include "Chamado.h"
 #include <random>
+#include <iostream>
 
 // Construtor Padrão
 Chamado::Chamado() {}
@@ -61,6 +62,19 @@ void Chamado::setPrioridade(Prioridade prioridade) {
 
 void Chamado::setStatus(Status status) {
     this->status = status;
+}
+
+void Chamado::imprimir() const {
+    std::cout << "========================================" << std::endl;
+    std::cout << "               CHAMADO #" << id          << std::endl;
+    std::cout << "========================================" << std::endl;
+    std::cout << "Solicitante : " << solicitante.getNome() 
+              << " (Matrícula: " << solicitante.getMatricula() << ")" << std::endl;
+    std::cout << "Descrição   : " << descricao << std::endl;
+    std::cout << "Categoria   : " << categoriaParaTexto()  << std::endl;
+    std::cout << "Prioridade  : " << prioridadeParaTexto() << std::endl;
+    std::cout << "Status      : " << statusParaTexto()     << std::endl;
+    std::cout << "========================================" << std::endl;
 }
 
 
