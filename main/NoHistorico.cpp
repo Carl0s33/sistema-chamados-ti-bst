@@ -1,4 +1,4 @@
-#include "NoHistorico.h"
+#include "interface/NoHistorico.h"
 
 NoHistorico::NoHistorico(std::string dataHorario, std::string descricao) : dataHorario(dataHorario), descricao(descricao), proximo(nullptr) {}
 
