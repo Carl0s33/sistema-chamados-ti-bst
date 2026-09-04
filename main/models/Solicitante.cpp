@@ -2,13 +2,11 @@
 #include <random>
 
 
-// Construtor invocando os métodos privados na lista de inicialização
 Solicitante::Solicitante()
     : nome(gerarNomeAleatorio()), 
       matricula(gerarMatriculaAleatoria()), 
       tipo(gerarTipoAleatorio()) {}
 
-// Construtor Parametrizado
 Solicitante::Solicitante(string nome, string matricula, tipoSolicitante tipo)
     : nome(nome), matricula(matricula), tipo(tipo) {}
 

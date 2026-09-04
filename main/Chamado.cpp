@@ -7,7 +7,7 @@ Chamado::Chamado() {}
 // Construtor Parametrizado utilizando Lista de Inicialização
 Chamado::Chamado(int id)
     : id(id),
-      solicitante(gerarSolicitanteAleatorio()),
+      solicitante(),
       descricao(gerarDescricaoAleatoria()),
       categoria(gerarCategoriaAleatoria()),
       prioridade(gerarPrioridadeAleatoria()),
@@ -19,7 +19,7 @@ int Chamado::getId() const {
     return id;
 }
 
-string Chamado::getSolicitante() const {
+Solicitante Chamado::getSolicitante() const {
     return solicitante;
 }
 
@@ -45,11 +45,9 @@ void Chamado::setId(int id) {
     this->id = id;
 }
 
-void Chamado::setSolicitante(const string& solicitante) {
-    this->solicitante = solicitante;
-}
 
-void Chamado::setDescricao(const string& descricao) {
+
+void Chamado::setDescricao( string& descricao) {
     this->descricao = descricao;
 }
 
@@ -66,18 +64,6 @@ void Chamado::setStatus(Status status) {
 }
 
 
-
-string Chamado::gerarSolicitanteAleatorio() {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    static const string solicitantes[] = {
-        "João Silva", "Maria Oliveira", "Carlos Souza", "Ana Lima", "Pedro Santos"
-    };
-    constexpr std::size_t quantidadeSolicitantes =
-        sizeof(solicitantes) / sizeof(solicitantes[0]);
-    std::uniform_int_distribution<std::size_t> dist(0, quantidadeSolicitantes - 1);
-    return solicitantes[dist(gen)];
-}
 
 string Chamado::gerarDescricaoAleatoria() {
     static std::random_device rd;
@@ -113,4 +99,34 @@ Status Chamado::gerarStatusAleatorio() {
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(0, 3); // Ajuste conforme a quantidade de itens do Enum Status
     return static_cast<Status>(dist(gen));
+}
+
+
+// cast dos enums
+
+string Chamado::categoriaParaTexto() const {
+    switch (categoria) {
+        case Categoria::HARDWARE: return "Hardware";
+        case Categoria::SOFTWARE: return "Software";
+        case Categoria::REDE:     return "Rede";
+        default:                  return "Outros";
+    }
+}
+
+string Chamado::prioridadeParaTexto() const {
+    switch (prioridade) {
+        case Prioridade::BAIXA:   return "Baixa";
+        case Prioridade::MEDIA:   return "Média";
+        case Prioridade::ALTA:    return "Alta";
+        default:                  return "Crítica";
+    }
+}
+
+string Chamado::statusParaTexto() const {
+    switch (status) {
+        case Status::ABERTO:       return "Aberto";
+        case Status::EM_ANDAMENTO: return "Em Andamento";
+        case Status::RESOLVIDO:    return "Resolvido";
+        default:                   return "Fechado";
+    }
 }

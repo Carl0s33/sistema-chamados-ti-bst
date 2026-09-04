@@ -11,17 +11,16 @@ private:
     string matricula;
     tipoSolicitante tipo;
 
-    // Métodos privados auxiliares para geração aleatória
     static string gerarNomeAleatorio();
     static string gerarMatriculaAleatoria();
     static tipoSolicitante gerarTipoAleatorio();
 
 public:
-    // Construtor que gera um Solicitante com dados totalmente aleatórios
     Solicitante();
-    
-    // Construtor Parametrizado
+
     Solicitante(string nome, string matricula, tipoSolicitante tipo);
+
+    void imprimir() const;
 
     // Getters
     string getNome() const;
