@@ -30,11 +30,10 @@ class Chamado {
     string prioridadeParaTexto() const;
     string statusParaTexto() const;
 
-    void imprimir() const;
-
     public:
     Chamado();
     Chamado(int id);
+    void imprimir() const;
 
 
     int getId() const;

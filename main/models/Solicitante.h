@@ -1,7 +1,7 @@
 #pragma once 
 
 #include <string>
-#include "enums/tipoSolicitante.h"
+#include "../enums/tipoSolicitante.h"
 
 using namespace std;
 
