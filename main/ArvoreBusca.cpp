@@ -13,16 +13,16 @@ ArvoreBusca::~ArvoreBusca() {
     destruirArvore(this->raiz);
 }
 
- NoBST* ArvoreBusca::cadastrar(NoBST* no, const Chamado& chamado, bool& inserido) {
+ NoBST* ArvoreBusca::inserirRecursivo(NoBST* no, const Chamado& chamado, bool& inserido) {
     if (no == nullptr) {
         inserido = true;
         return new NoBST(chamado);
     }
 
     if (chamado.getId() < no->chamado.getId()) {
-        no->esquerda = cadastrar(no->esquerda, chamado, inserido);
+        no->esquerda = inserirRecursivo(no->esquerda, chamado, inserido);
     } else if (chamado.getId() > no->chamado.getId()) {
-        no->direita = cadastrar(no->direita, chamado, inserido);
+        no->direita = inserirRecursivo(no->direita, chamado, inserido);
     } else {
         inserido = false;
     }
@@ -31,13 +31,28 @@ ArvoreBusca::~ArvoreBusca() {
 
 bool ArvoreBusca::inserir(Chamado chamado) {
     bool inserido = false;
-    this->raiz = cadastrar(this->raiz, chamado, inserido);
+    this->raiz = inserirRecursivo(this->raiz, chamado, inserido);
     return inserido;
     return false;
 }
 
+NoBST* ArvoreBusca::localizarRecursivo(NoBST* no, int id) const {
+    if (no == nullptr || no->chamado.getId() == id) {
+        return no;
+    } 
+
+    if (id < no->chamado.getId()) {
+        return localizarRecursivo(no->esquerda, id);
+    } else {
+        return localizarRecursivo(no->direita, id);
+    }
+}
+
 Chamado* ArvoreBusca::localizar(int identificador) {
-    // TODO: Implementar busca por identificador
+    NoBST* no = localizarRecursivo(this->raiz, identificador);
+    if (no != nullptr) {
+        return &(no->chamado);
+    }
     return nullptr;
 }
 

@@ -17,7 +17,7 @@ private:
     NoBST* raiz;
 
   
-    NoBST* cadastrar(NoBST* no, const Chamado& chamado, bool& inserido);
+    NoBST* inserirRecursivo(NoBST* no, const Chamado& chamado, bool& inserido);
     NoBST* localizarRecursivo(NoBST* no, int identificador) const;
     NoBST* removerRecursivo(NoBST* no, int identificador, bool& removido);
     void emOrdemRecursivo(NoBST* no) const;
