@@ -26,6 +26,7 @@ class Chamado {
     static Prioridade gerarPrioridadeAleatoria();
     static Status gerarStatusAleatorio();
 
+
     string categoriaParaTexto() const;
     string prioridadeParaTexto() const;
     string statusParaTexto() const;
@@ -35,13 +36,15 @@ class Chamado {
     Chamado(int id);
     void imprimir() const;
 
-
-    int getId() const;
+   ListaHistorico& getHistorico();
+    int getId() const;  
+    
     Solicitante getSolicitante() const;
     string getDescricao() const;
     Categoria getCategoria() const;
     Prioridade getPrioridade() const;
     Status getStatus() const;
+  
 
     // Setters
     void setId(int id);
