@@ -35,37 +35,46 @@ Siga as instruções abaixo para compilar e executar o sistema em sua máquina l
 ### Pré-requisitos
 
 *   Compilador C++ (como GCC/g++, Clang ou MSVC) instalado.
-*   Terminal, Prompt de Comando ou IDE de sua preferência.
+*   Ferramenta `make` instalada (no Windows através do MinGW, geralmente `mingw32-make`).
+*   Terminal, Prompt de Comando ou PowerShell.
 
 ### Passos para Execução
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://github.com/seu-usuario/sistema-chamados-ti-bst.git
+    git clone [https://github.com/Carl0s33/sistema-chamados-ti-bst.git](https://github.com/Carl0s33/sistema-chamados-ti-bst.git)
     ```
 
-2.  **Acesse o diretório do projeto:**
+2.  **Acesse o diretório do código-fonte:**
+    Navegue até a pasta `main`, onde os arquivos `.cpp` e o `makefile` estão localizados:
     ```bash
-    cd sistema-chamados-ti-bst
+    cd sistema-chamados-ti-bst/main
     ```
 
-3.  **Compile os arquivos de código-fonte:**
-    No diretório raiz do projeto (onde os arquivos `.cpp` estão localizados), execute o comando:
-    ```bash
-    g++ *.cpp -o sistema
-    ```
-
-4.  **Execute o sistema:**
-    Após a compilação bem-sucedida, inicie a aplicação:
+3.  **Compile o projeto utilizando o Makefile:**
+    Ainda dentro da pasta `main`, execute o comando correspondente ao seu sistema operacional para compilar os arquivos:
     
-    No Windows (Prompt de Comando ou PowerShell):
+    No Windows (via MinGW):
     ```bash
-    .\sistema.exe
+    mingw32-make
     ```
     
     No Linux ou macOS:
     ```bash
-    ./sistema
+    make
+    ```
+
+4.  **Execute o sistema:**
+    Após a compilação bem-sucedida, o executável será gerado. Inicie a aplicação:
+    
+    No Windows (Prompt de Comando ou PowerShell):
+    ```bash
+    .\chamado.exe
+    ```
+    
+    No Linux ou macOS:
+    ```bash
+    ./chamado
     ```
 
 ## Arquitetura do Sistema
