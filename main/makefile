@@ -5,7 +5,8 @@ SRC = main.cpp \
       Chamado.cpp \
       ListaHistorico.cpp \
       NoHistorico.cpp \
-      models/Solicitante.cpp
+      models/Solicitante.cpp \
+      ArvoreBusca.cpp \
 
 TARGET = chamado.exe
 

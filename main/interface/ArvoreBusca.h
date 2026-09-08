@@ -12,12 +12,12 @@ struct NoBST {
     NoBST(const Chamado& c) : chamado(c), esquerda(nullptr), direita(nullptr) {}
 };
 
-class ArvoreBST {
+class ArvoreBusca {
 private:
     NoBST* raiz;
 
   
-    NoBST* cadastrarRecursivo(NoBST* no, const Chamado& chamado, bool& inserido);
+    NoBST* cadastrar(NoBST* no, const Chamado& chamado, bool& inserido);
     NoBST* localizarRecursivo(NoBST* no, int identificador) const;
     NoBST* removerRecursivo(NoBST* no, int identificador, bool& removido);
     void emOrdemRecursivo(NoBST* no) const;
@@ -29,10 +29,10 @@ private:
     void destruirArvore(NoBST* no);
 
 public:
-    ArvoreBST();
-    ~ArvoreBST();
+    ArvoreBusca();
+    ~ArvoreBusca();
 
-    bool cadastrar(Chamado chamado);
+    bool inserir(Chamado chamado);
     Chamado* localizar(int identificador);
     bool remover(int identificador);
     void listarOrdemCrescente();
