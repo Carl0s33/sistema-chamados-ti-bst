@@ -16,7 +16,7 @@ class ArvoreBusca {
 private:
     NoBST* raiz;
 
-  
+    NoBST* encontrarSucessor(NoBST* raiz, NoBST* alvo);
     NoBST* inserirRecursivo(NoBST* no, const Chamado& chamado, bool& inserido);
     NoBST* localizarRecursivo(NoBST* no, int identificador) const;
     NoBST* removerRecursivo(NoBST* no, int identificador, bool& removido);
