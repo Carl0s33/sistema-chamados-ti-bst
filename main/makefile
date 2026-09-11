@@ -9,9 +9,8 @@ SRC = main.cpp \
       ArvoreBusca.cpp \
       FilaChamados.cpp \
       NoFila.cpp \
-      models/Solicitante.cpp
 
-TARGET = chamado.exe
+TARGET = main.exe
 
 all: $(TARGET)
 
