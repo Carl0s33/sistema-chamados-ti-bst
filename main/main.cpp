@@ -6,10 +6,10 @@
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
-    Chamado chamado1(1);
+
     
-    // 1. Imprime os dados básicos do chamado gerado
-    chamado1.imprimir();
+
+
 
   Chamado chamado1(1);
   chamado1.imprimir();
