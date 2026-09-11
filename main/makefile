@@ -5,9 +5,12 @@ SRC = main.cpp \
       Chamado.cpp \
       ListaHistorico.cpp \
       NoHistorico.cpp \
-      models/Solicitante.cpp
+      models/Solicitante.cpp \
+      ArvoreBusca.cpp \
+      FilaChamados.cpp \
+      NoFila.cpp \
 
-TARGET = chamado.exe
+TARGET = main.exe
 
 all: $(TARGET)
 
