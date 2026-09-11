@@ -7,6 +7,9 @@ SRC = main.cpp \
       NoHistorico.cpp \
       models/Solicitante.cpp \
       ArvoreBusca.cpp \
+      FilaChamados.cpp \
+      NoFila.cpp \
+      models/Solicitante.cpp
 
 TARGET = chamado.exe
 

@@ -1,6 +1,8 @@
 #include "interface/Chamado.h"
 #include <random>
 #include <iostream>
+using namespace std;
+
 
 // Construtor Padrão
 Chamado::Chamado() {}
@@ -39,7 +41,9 @@ Prioridade Chamado::getPrioridade() const {
 Status Chamado::getStatus() const {
     return status;
 }
-
+ListaHistorico& Chamado::getHistorico() {
+    return historico;
+}
 // --- SETTERS ---
 
 void Chamado::setId(int id) {
