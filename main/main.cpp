@@ -6,7 +6,9 @@
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
+
      ArvoreBusca arvore;
+
 
  
     for(int i = 0; i < 7 ;i++) {
