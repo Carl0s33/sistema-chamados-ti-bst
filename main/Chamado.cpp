@@ -3,13 +3,17 @@
 #include <iostream>
 using namespace std;
 
-
-// Construtor Padrão
-Chamado::Chamado() {}
-
-// Construtor Parametrizado utilizando Lista de Inicialização
 Chamado::Chamado(int id)
     : id(id),
+      solicitante(),
+      descricao(gerarDescricaoAleatoria()),
+      categoria(gerarCategoriaAleatoria()),
+      prioridade(gerarPrioridadeAleatoria()),
+      status(gerarStatusAleatorio()) {}
+
+// Construtor Parametrizado utilizando Lista de Inicialização
+Chamado::Chamado()
+    : id(gerarIdAleatorio()),
       solicitante(),
       descricao(gerarDescricaoAleatoria()),
       categoria(gerarCategoriaAleatoria()),
@@ -117,6 +121,13 @@ Status Chamado::gerarStatusAleatorio() {
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<> dist(0, 3); // Ajuste conforme a quantidade de itens do Enum Status
     return static_cast<Status>(dist(gen));
+}
+
+int Chamado::gerarIdAleatorio() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(1000, 9999); // Gera IDs entre 1000 e 9999
+    return dist(gen);
 }
 
 

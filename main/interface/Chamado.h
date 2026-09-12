@@ -25,7 +25,7 @@ class Chamado {
     static Categoria gerarCategoriaAleatoria();
     static Prioridade gerarPrioridadeAleatoria();
     static Status gerarStatusAleatorio();
-
+    static int gerarIdAleatorio();
 
     string categoriaParaTexto() const;
     string prioridadeParaTexto() const;
