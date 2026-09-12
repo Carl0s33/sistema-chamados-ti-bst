@@ -62,6 +62,7 @@ Chamado* ArvoreBusca::localizar(int id) {
     if (no != nullptr) {
         return &(no->chamado);
     }
+    cout << "Chamado com ID " << id << " não encontrado." << endl;
     return nullptr;
 }
 
@@ -166,13 +167,25 @@ void ArvoreBusca::listarOrdemCrescente() {
 }
 
 Chamado* ArvoreBusca::obterMenorIdentificador() {
-    // TODO: Implementar busca do nó mais à esquerda
-    return nullptr;
+    if (this->raiz == nullptr) {
+        return nullptr;
+    }
+    NoBST* atual = this->raiz;
+    while(atual->esquerda != nullptr) {
+        atual = atual->esquerda;
+    }
+    return &(atual->chamado);
 }
 
 Chamado* ArvoreBusca::obterMaiorIdentificador() {
-    // TODO: Implementar busca do nó mais à direita
-    return nullptr;
+    if (this->raiz == nullptr) {
+        return nullptr;
+    }
+    NoBST* atual = this->raiz;
+    while(atual->direita != nullptr) {
+        atual = atual->direita;
+    }
+    return &(atual->chamado);
 }
 
 int ArvoreBusca::obterAltura() {

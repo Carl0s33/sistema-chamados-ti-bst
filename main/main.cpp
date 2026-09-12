@@ -8,8 +8,8 @@ int main() {
     SetConsoleOutputCP(CP_UTF8);
 
      ArvoreBusca arvore;
-
-
+    Chamado chamado1(1);
+    arvore.inserir(chamado1);
  
     for(int i = 0; i < 7 ;i++) {
       Chamado chamado{};
@@ -18,8 +18,10 @@ int main() {
                 << (inserido ? " inserido" : " duplicado") << std::endl;
     }
 
-    arvore.listarOrdemCrescente();
-
+    // arvore.listarOrdemCrescente();
+    
+     Chamado* chamadoEncontrado = arvore.obterMaiorIdentificador();
+    chamadoEncontrado->imprimir();
 
     return 0;
 }
