@@ -43,7 +43,6 @@ bool ArvoreBusca::inserir(Chamado chamado) {
     bool inserido = false;
     this->raiz = inserirRecursivo(this->raiz, chamado, inserido);
     return inserido;
-    return false;
 }
 
 NoBST* ArvoreBusca::localizarRecursivo(NoBST* no, int id) const {
@@ -150,8 +149,20 @@ NoBST* ArvoreBusca::encontrarSucessor(NoBST* raiz, NoBST* alvo) {
     return sucessor;
 }
 
+void ArvoreBusca::emOrdem(NoBST* no) const {
+    if(no != nullptr) {
+        emOrdem(no->esquerda);
+        no->chamado.imprimir();
+        emOrdem(no->direita);
+    }
+
+}
 void ArvoreBusca::listarOrdemCrescente() {
-    // TODO: Implementar percurso em-ordem (In-Order) para listar chamados
+    if (this->raiz == nullptr) {
+        std::cout << "Nenhum chamado cadastrado." << std::endl;
+        return;
+    }
+    emOrdem(this->raiz);
 }
 
 Chamado* ArvoreBusca::obterMenorIdentificador() {

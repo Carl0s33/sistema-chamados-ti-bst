@@ -20,6 +20,7 @@ private:
     NoBST* inserirRecursivo(NoBST* no, const Chamado& chamado, bool& inserido);
     NoBST* localizarRecursivo(NoBST* no, int identificador) const;
     NoBST* removerRecursivo(NoBST* no, int identificador, bool& removido);
+    void emOrdem(NoBST* no) const;
     void emOrdemRecursivo(NoBST* no) const;
     void preOrdemRecursivo(NoBST* no) const;
     void posOrdemRecursivo(NoBST* no) const;
