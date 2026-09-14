@@ -1,6 +1,10 @@
 #include "interface/FilaChamados.h"
 
-FilaChamados::FilaChamados() : frente(nullptr), tras(nullptr) {}
+FilaChamados::FilaChamados() : frente(nullptr), tras(nullptr), quantidade(0) {}
+
+int FilaChamados::getQuantidade() const {
+    return quantidade;
+}
 
 FilaChamados::~FilaChamados() {
     while (!estaVazia()) {
@@ -14,6 +18,7 @@ bool FilaChamados::estaVazia() const {
 
 void FilaChamados::enfileirar(Chamado* c) {
     NoFila* novoNo = new NoFila(c);
+    ++quantidade;
     
     if (estaVazia()) {
         frente = novoNo;
@@ -40,6 +45,7 @@ Chamado* FilaChamados::desenfileirar() {
     }
     
     delete temp; // Libera apenas o nó da fila, não o Chamado em si (que está na BST)
+    --quantidade;
     return c;
 }
 

@@ -33,6 +33,8 @@ class Chamado {
     public:
     Chamado();
     Chamado(int id);
+    Chamado(const Solicitante& solicitante, const std::string& descricao,
+            Categoria categoria, Prioridade prioridade);
     void imprimir() const;
 
    ListaHistorico& getHistorico();

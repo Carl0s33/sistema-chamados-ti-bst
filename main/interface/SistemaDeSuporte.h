@@ -8,6 +8,7 @@ private:
     FilaChamados fila;
 
     void exibirMenu() const;
+    void exibirEstatisticas();
 
 public:
     SistemaDeSuporte();
