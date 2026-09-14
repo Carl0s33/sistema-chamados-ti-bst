@@ -27,6 +27,7 @@ private:
     void listarPorIntervaloRecursivo(NoBST* no, int min, int max) const;
     int calcularAlturaRecursivo(NoBST* no) const;
     int contarNosRecursivo(NoBST* no) const;
+    int contarPorStatusRecursivo(NoBST* no, Status status) const;
     void destruirArvore(NoBST* no);
 
 public:
@@ -41,10 +42,11 @@ public:
     Chamado* obterMaiorIdentificador();
     int obterAltura();
     int determinarNumeroDeChamados();
+    int contarPorStatus(Status status) const;
     void listarPorIntervalo(int min, int max);
     void percursoPreOrdem();
     void percursoPosOrdem();
     void percursoEmLargura();
 };
 
-#endif 
+#endif

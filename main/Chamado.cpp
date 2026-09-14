@@ -3,6 +3,11 @@
 #include <iostream>
 using namespace std;
 
+Chamado::Chamado(const Solicitante& solicitante, const std::string& descricao,
+                 Categoria categoria, Prioridade prioridade)
+    : id(gerarIdAleatorio()), solicitante(solicitante), descricao(descricao),
+      categoria(categoria), prioridade(prioridade), status(Status::ABERTO) {}
+
 Chamado::Chamado(int id)
     : id(id),
       solicitante(),
@@ -138,6 +143,8 @@ string Chamado::categoriaParaTexto() const {
         case Categoria::HARDWARE: return "Hardware";
         case Categoria::SOFTWARE: return "Software";
         case Categoria::REDE:     return "Rede";
+        case Categoria::SISTEMA:  return "Sistema";
+        case Categoria::ACESSO:   return "Acesso";
         default:                  return "Outros";
     }
 }
@@ -156,6 +163,6 @@ string Chamado::statusParaTexto() const {
         case Status::ABERTO:       return "Aberto";
         case Status::EM_ANDAMENTO: return "Em Andamento";
         case Status::RESOLVIDO:    return "Resolvido";
-        default:                   return "Fechado";
+        default:                   return "Cancelado";
     }
 }

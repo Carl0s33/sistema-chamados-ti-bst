@@ -14,4 +14,5 @@ public:
     Chamado* desenfileirar();
     Chamado* getFrente() const;
     bool estaVazia() const;
+    int getQuantidade() const;
 };

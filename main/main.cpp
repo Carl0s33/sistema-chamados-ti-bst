@@ -1,10 +1,7 @@
-#include <iostream>
-#include <windows.h>
-#include "interface/Chamado.h"
-#include "interface/ListaHistorico.h"
-#include "interface/ArvoreBusca.h"
+#include "interface/SistemaDeSuporte.h"
 
 int main() {
+
     SetConsoleOutputCP(CP_UTF8);
 
      ArvoreBusca arvore;
@@ -22,6 +19,10 @@ int main() {
     
      Chamado* chamadoEncontrado = arvore.obterMaiorIdentificador();
     chamadoEncontrado->imprimir();
+
+
+    SistemaDeSuporte sistema;
+    sistema.executar();
 
     return 0;
 }

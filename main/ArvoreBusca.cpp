@@ -167,49 +167,134 @@ void ArvoreBusca::listarOrdemCrescente() {
 }
 
 Chamado* ArvoreBusca::obterMenorIdentificador() {
+
     if (this->raiz == nullptr) {
         return nullptr;
     }
     NoBST* atual = this->raiz;
     while(atual->esquerda != nullptr) {
+
         atual = atual->esquerda;
     }
     return &(atual->chamado);
 }
 
 Chamado* ArvoreBusca::obterMaiorIdentificador() {
-    if (this->raiz == nullptr) {
-        return nullptr;
-    }
-    NoBST* atual = this->raiz;
-    while(atual->direita != nullptr) {
+
+    if (raiz == nullptr) return nullptr;
+
+    NoBST* atual = raiz;
+    while (atual->direita != nullptr) {
         atual = atual->direita;
     }
     return &(atual->chamado);
 }
 
+int ArvoreBusca::calcularAlturaRecursivo(NoBST* no) const {
+    if (no == nullptr) return -1;
+
+    int alturaEsq = calcularAlturaRecursivo(no->esquerda);
+    int alturaDir = calcularAlturaRecursivo(no->direita);
+    return 1 + (alturaEsq > alturaDir ? alturaEsq : alturaDir);
+
+}
+
 int ArvoreBusca::obterAltura() {
-    // TODO: Implementar cálculo da altura da árvore
-    return 0;
+    return calcularAlturaRecursivo(raiz);
+}
+
+int ArvoreBusca::contarNosRecursivo(NoBST* no) const {
+    if (no == nullptr) return 0;
+
+    return 1 + contarNosRecursivo(no->esquerda) + contarNosRecursivo(no->direita);
 }
 
 int ArvoreBusca::determinarNumeroDeChamados() {
-    // TODO: Implementar contagem total de nós
-    return 0;
+    return contarNosRecursivo(raiz);
+}
+
+int ArvoreBusca::contarPorStatusRecursivo(NoBST* no, Status status) const {
+    if (no == nullptr) return 0;
+    return (no->chamado.getStatus() == status ? 1 : 0)
+        + contarPorStatusRecursivo(no->esquerda, status)
+        + contarPorStatusRecursivo(no->direita, status);
+}
+
+int ArvoreBusca::contarPorStatus(Status status) const {
+    return contarPorStatusRecursivo(raiz, status);
+}
+
+void ArvoreBusca::listarPorIntervaloRecursivo(NoBST* no, int min, int max) const {
+    if (no == nullptr) return;
+
+    if (no->chamado.getId() > min) {
+        listarPorIntervaloRecursivo(no->esquerda, min, max);
+    }
+    if (no->chamado.getId() >= min && no->chamado.getId() <= max) {
+        no->chamado.imprimir();
+    }
+    if (no->chamado.getId() < max) {
+        listarPorIntervaloRecursivo(no->direita, min, max);
+    }
 }
 
 void ArvoreBusca::listarPorIntervalo(int min, int max) {
-    // TODO: Implementar listagem de chamados cujo ID esteja entre min e max
+    if (raiz == nullptr) {
+        std::cout << "Arvore vazia.\n";
+        return;
+    }
+    listarPorIntervaloRecursivo(raiz, min, max);
 }
 
 void ArvoreBusca::percursoPreOrdem() {
-    // TODO: Implementar percurso pré-ordem exibindo apenas os IDs
+    if (raiz == nullptr) {
+        std::cout << "Arvore vazia.\n";
+        return;
+    }
+    std::cout << "Pre-Ordem: ";
+    preOrdemRecursivo(raiz);
+    std::cout << "\n";
 }
 
 void ArvoreBusca::percursoPosOrdem() {
-    // TODO: Implementar percurso pós-ordem exibindo apenas os IDs
+    if (raiz == nullptr) {
+        std::cout << "Arvore vazia.\n";
+        return;
+    }
+    std::cout << "Pos-Ordem: ";
+    posOrdemRecursivo(raiz);
+    std::cout << "\n";
 }
 
 void ArvoreBusca::percursoEmLargura() {
-    // TODO: Implementar percurso em largura (BFS) usando fila exibindo apenas os IDs
+    if (raiz == nullptr) {
+        std::cout << "Arvore vazia.\n";
+        return;
+    }
+
+    std::cout << "Em Largura: ";
+    std::queue<NoBST*> fila;
+    fila.push(raiz);
+    while (!fila.empty()) {
+        NoBST* atual = fila.front();
+        fila.pop();
+        std::cout << atual->chamado.getId() << " ";
+        if (atual->esquerda != nullptr) fila.push(atual->esquerda);
+        if (atual->direita != nullptr) fila.push(atual->direita);
+    }
+    std::cout << "\n";
+}
+
+void ArvoreBusca::preOrdemRecursivo(NoBST* no) const {
+    if (no == nullptr) return;
+    std::cout << no->chamado.getId() << " ";
+    preOrdemRecursivo(no->esquerda);
+    preOrdemRecursivo(no->direita);
+}
+
+void ArvoreBusca::posOrdemRecursivo(NoBST* no) const {
+    if (no == nullptr) return;
+    posOrdemRecursivo(no->esquerda);
+    posOrdemRecursivo(no->direita);
+    std::cout << no->chamado.getId() << " ";
 }
