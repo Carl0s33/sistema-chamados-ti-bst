@@ -7,23 +7,23 @@ Solicitante::Solicitante()
       matricula(gerarMatriculaAleatoria()), 
       tipo(gerarTipoAleatorio()) {}
 
-Solicitante::Solicitante(string nome, string matricula, tipoSolicitante tipo)
+Solicitante::Solicitante(std::string nome, std::string matricula, tipoSolicitante tipo)
     : nome(nome), matricula(matricula), tipo(tipo) {}
 
 
 // --- MÉTODOS PRIVADOS AUXILIARES ---
 
-string Solicitante::gerarNomeAleatorio() {
+std::string Solicitante::gerarNomeAleatorio() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    static const string nomes[] = {
+    static const std::string nomes[] = {
         "João Pedro", "Ana Julia", "Carlos Eduardo", "Maria Clara", "Lucas Gabriel"
     };
     std::uniform_int_distribution<int> dist(0, 4);
     return nomes[dist(gen)];
 }
 
-string Solicitante::gerarMatriculaAleatoria() {
+std::string Solicitante::gerarMatriculaAleatoria() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
     // Gera um número no formato de matrícula acadêmica (ex: 20260001 a 20269999)
@@ -41,11 +41,11 @@ tipoSolicitante Solicitante::gerarTipoAleatorio() {
 
 // --- GETTERS ---
 
-string Solicitante::getNome() const {
+std::string Solicitante::getNome() const {
     return nome;
 }
 
-string Solicitante::getMatricula() const {
+std::string Solicitante::getMatricula() const {
     return matricula;
 }
 
@@ -55,11 +55,11 @@ tipoSolicitante Solicitante::getTipo() const {
 
 // --- SETTERS ---
 
-void Solicitante::setNome(const string& nome) {
+void Solicitante::setNome(const std::string& nome) {
     this->nome = nome;
 }
 
-void Solicitante::setMatricula(const string& matricula) {
+void Solicitante::setMatricula(const std::string& matricula) {
     this->matricula = matricula;
 }
 
