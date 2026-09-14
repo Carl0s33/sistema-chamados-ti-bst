@@ -62,6 +62,7 @@ Chamado* ArvoreBusca::localizar(int id) {
     if (no != nullptr) {
         return &(no->chamado);
     }
+    cout << "Chamado com ID " << id << " não encontrado." << endl;
     return nullptr;
 }
 
@@ -166,16 +167,20 @@ void ArvoreBusca::listarOrdemCrescente() {
 }
 
 Chamado* ArvoreBusca::obterMenorIdentificador() {
-    if (raiz == nullptr) return nullptr;
 
-    NoBST* atual = raiz;
-    while (atual->esquerda != nullptr) {
+    if (this->raiz == nullptr) {
+        return nullptr;
+    }
+    NoBST* atual = this->raiz;
+    while(atual->esquerda != nullptr) {
+
         atual = atual->esquerda;
     }
     return &(atual->chamado);
 }
 
 Chamado* ArvoreBusca::obterMaiorIdentificador() {
+
     if (raiz == nullptr) return nullptr;
 
     NoBST* atual = raiz;
@@ -191,6 +196,7 @@ int ArvoreBusca::calcularAlturaRecursivo(NoBST* no) const {
     int alturaEsq = calcularAlturaRecursivo(no->esquerda);
     int alturaDir = calcularAlturaRecursivo(no->direita);
     return 1 + (alturaEsq > alturaDir ? alturaEsq : alturaDir);
+
 }
 
 int ArvoreBusca::obterAltura() {
