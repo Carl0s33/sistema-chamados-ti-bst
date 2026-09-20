@@ -1,7 +1,7 @@
 #include "interface/ArvoreBusca.h"
 #include <iostream>
 #include <queue>
-
+using namespace std;
 // Construtor
 ArvoreBusca::ArvoreBusca() {
     this->raiz = nullptr;
@@ -23,6 +23,7 @@ void ArvoreBusca::destruirArvore(NoBST* no) {
     delete no;
 }
 
+// vai procurando um lugar pelo id e não deixa entrar id repetido
  NoBST* ArvoreBusca::inserirRecursivo(NoBST* no, const Chamado& chamado, bool& inserido) {
     if (no == nullptr) {
         inserido = true;
@@ -62,7 +63,7 @@ Chamado* ArvoreBusca::localizar(int id) {
     if (no != nullptr) {
         return &(no->chamado);
     }
-    cout << "Chamado com ID " << id << " não encontrado." << endl;
+    std::cout << "Chamado com ID " << id << " não encontrado." << std::endl;
     return nullptr;
 }
 
@@ -150,6 +151,7 @@ NoBST* ArvoreBusca::encontrarSucessor(NoBST* raiz, NoBST* alvo) {
     return sucessor;
 }
 
+// passa pela esquerda, pelo nó e pela direita pra mostrar os ids em ordem
 void ArvoreBusca::emOrdem(NoBST* no) const {
     if(no != nullptr) {
         emOrdem(no->esquerda);
@@ -266,6 +268,7 @@ void ArvoreBusca::percursoPosOrdem() {
     std::cout << "\n";
 }
 
+// usa uma fila pra mostrar um nível da árvore de cada vez
 void ArvoreBusca::percursoEmLargura() {
     if (raiz == nullptr) {
         std::cout << "Arvore vazia.\n";
