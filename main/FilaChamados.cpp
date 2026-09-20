@@ -16,6 +16,7 @@ bool FilaChamados::estaVazia() const {
     return frente == nullptr;
 }
 
+// coloca o chamado no fim da fila pra esperar a vez dele
 void FilaChamados::enfileirar(Chamado* c) {
     NoFila* novoNo = new NoFila(c);
     ++quantidade;
@@ -29,6 +30,7 @@ void FilaChamados::enfileirar(Chamado* c) {
     }
 }
 
+// tira o primeiro da fila e devolve nulo se ela estiver vazia
 Chamado* FilaChamados::desenfileirar() {
     if (estaVazia()) {
         return nullptr;
@@ -49,6 +51,7 @@ Chamado* FilaChamados::desenfileirar() {
     return c;
 }
 
+// só olha quem é o próximo sem tirar da fila
 Chamado* FilaChamados::getFrente() const {
     if (estaVazia()) {
         return nullptr;
