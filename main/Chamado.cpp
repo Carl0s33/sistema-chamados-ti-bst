@@ -16,16 +16,17 @@ Chamado::Chamado(int id)
       prioridade(gerarPrioridadeAleatoria()),
       status(gerarStatusAleatorio()) {}
 
-// Construtor Parametrizado utilizando Lista de Inicialização
+// construtor parametrizado utilizando lista de inicializacao
 Chamado::Chamado()
     : id(gerarIdAleatorio()),
       solicitante(),
       descricao(gerarDescricaoAleatoria()),
       categoria(gerarCategoriaAleatoria()),
       prioridade(gerarPrioridadeAleatoria()),
-      status(gerarStatusAleatorio()) {}
+            // chamado novo sempre comeca aberto depois ele caminha pelo atendimento
+            status(Status::ABERTO) {}
 
-// --- GETTERS ---
+// getters
 
 int Chamado::getId() const {
     return id;
@@ -53,7 +54,7 @@ Status Chamado::getStatus() const {
 ListaHistorico& Chamado::getHistorico() {
     return historico;
 }
-// --- SETTERS ---
+// setters
 
 void Chamado::setId(int id) {
     this->id = id;
@@ -109,7 +110,7 @@ Categoria Chamado::gerarCategoriaAleatoria() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(
-        0, static_cast<int>(Categoria::OUTROS));
+        0, static_cast<int>(Categoria::ACESSO));
     return static_cast<Categoria>(dist(gen));
 }
 
@@ -124,19 +125,18 @@ Prioridade Chamado::gerarPrioridadeAleatoria() {
 Status Chamado::gerarStatusAleatorio() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, 3); // Ajuste conforme a quantidade de itens do Enum Status
+    std::uniform_int_distribution<> dist(0, 3); // ajuste conforme a quantidade de itens do enum status
     return static_cast<Status>(dist(gen));
 }
 
 int Chamado::gerarIdAleatorio() {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dist(1000, 9999); // Gera IDs entre 1000 e 9999
-    return dist(gen);
+    // o nome ficou antigo mas a ideia aqui e simples id unico e sem colisao
+    static int proximoId = 1001;
+    return proximoId++;
 }
 
 
-// cast dos enums
+// conversao dos enums
 
 string Chamado::categoriaParaTexto() const {
     switch (categoria) {

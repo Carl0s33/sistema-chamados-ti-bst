@@ -17,16 +17,8 @@ std::string dataHoraAtual() {
     return texto.str();
 }
 
-bool lerTexto(const char* mensagem, std::string& valor) {
-    while (true) {
-        std::cout << mensagem;
-        if (!std::getline(std::cin, valor)) return false;
-        if (valor.find_first_not_of(" \t\r") != std::string::npos) return true;
-        std::cout << "Erro: Este campo nao pode ficar vazio.\n";
-    }
-}
-
 bool lerInteiro(int& valor) {
+    // ler a linha inteira evita sobrar lixo no buffer para a proxima pergunta
     std::string linha;
     if (!std::getline(std::cin, linha)) return false;
     std::istringstream entrada(linha);
@@ -39,6 +31,7 @@ bool lerInteiro(int& valor) {
 }
 
 bool lerEscolha(const char* mensagem, int minimo, int maximo, int& valor) {
+    // o usuario pode errar e a funcao insiste ate receber uma opcao valida
     while (true) {
         std::cout << mensagem;
         if (!lerInteiro(valor)) {
@@ -86,17 +79,8 @@ void SistemaDeSuporte::executar() {
         switch (opcao) {
             case 1: {
                 cout << "\n--- Abrir Chamado ---" << endl;
-                string nome, matricula, descricao;
-                int tipo, categoria, prioridade;
-                if (!lerTexto("Nome do solicitante: ", nome)) return;
-                if (!lerTexto("Matricula do solicitante: ", matricula)) return;
-                if (!lerEscolha("Tipo: 1. Docente  2. Discente  3. Servidor\nEscolha: ", 1, 3, tipo)) return;
-                if (!lerTexto("Descricao do problema: ", descricao)) return;
-                if (!lerEscolha("Categoria: 1. Hardware  2. Software  3. Rede  4. Sistema  5. Acesso  6. Outros\nEscolha: ", 1, 6, categoria)) return;
-                if (!lerEscolha("Prioridade: 1. Baixa  2. Media  3. Alta  4. Critica\nEscolha: ", 1, 4, prioridade)) return;
-                Solicitante solicitante(nome, matricula, static_cast<tipoSolicitante>(tipo - 1));
-                Chamado novoChamado(solicitante, descricao, static_cast<Categoria>(categoria - 1),
-                                   static_cast<Prioridade>(prioridade - 1));
+                // os dados variam a cada abertura para facilitar os testes da bst
+                Chamado novoChamado;
                 
                 if (arvore.inserir(novoChamado)) {
                     arvore.localizar(novoChamado.getId())->getHistorico().inserir(dataHoraAtual(), "Chamado aberto no sistema.");
@@ -110,7 +94,7 @@ void SistemaDeSuporte::executar() {
             case 2: {
                 cout << "\n--- Buscar Chamado ---" << endl;
                 int idBusca;
-                cout << "Digite o ID do chamado: ";
+                cout << "Digite o ID do chamado exibido ao abrir: ";
                 if (!lerInteiro(idBusca)) {
                     if (cin.eof() || cin.bad()) return;
                     break;
@@ -166,6 +150,7 @@ void SistemaDeSuporte::executar() {
             }
             case 6: {
                 cout << "\n--- Encaminhar Chamado para Atendimento ---" << endl;
+                // a fila guarda ponteiros e nao novas copias dos chamados
                 int idEncaminhar;
                 cout << "Digite o ID do chamado aberto para a fila: ";
                 if (!lerInteiro(idEncaminhar)) {
@@ -175,9 +160,12 @@ void SistemaDeSuporte::executar() {
 
                 Chamado* c = arvore.localizar(idEncaminhar);
                 if (c != nullptr) {
-                    fila.enfileirar(c);
-                    c->getHistorico().inserir(dataHoraAtual(), "Encaminhado para a fila de atendimento.");
-                    cout << "Chamado #" << idEncaminhar << " adicionado a fila com sucesso!" << endl;
+                    if (fila.enfileirar(c)) {
+                        c->getHistorico().inserir(dataHoraAtual(), "Encaminhado para a fila de atendimento.");
+                        cout << "Chamado #" << idEncaminhar << " adicionado a fila com sucesso!" << endl;
+                    } else {
+                        cout << "Chamado deve estar aberto e nao pode estar repetido na fila." << endl;
+                    }
                 } else {
                     cout << "Chamado nao encontrado!" << endl;
                 }
@@ -216,6 +204,7 @@ void SistemaDeSuporte::executar() {
             }
             case 9: {
                 cout << "\n--- Alterar Status ---" << endl;
+                // o historico registra a mudanca antes de trocar o estado atual
                 int id, escolha;
                 cout << "Digite o ID do chamado: ";
                 if (!lerInteiro(id)) {

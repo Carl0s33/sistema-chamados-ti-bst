@@ -11,7 +11,7 @@ Solicitante::Solicitante(std::string nome, std::string matricula, tipoSolicitant
     : nome(nome), matricula(matricula), tipo(tipo) {}
 
 
-// --- MÉTODOS PRIVADOS AUXILIARES ---
+// metodos privados auxiliares
 
 std::string Solicitante::gerarNomeAleatorio() {
     static std::random_device rd;
@@ -26,7 +26,7 @@ std::string Solicitante::gerarNomeAleatorio() {
 std::string Solicitante::gerarMatriculaAleatoria() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    // Gera um número no formato de matrícula acadêmica (ex: 20260001 a 20269999)
+    // gera um numero no formato de matricula academica por exemplo 20260001 a 20269999
     std::uniform_int_distribution<> dist(20260000, 20269999);
     return std::to_string(dist(gen));
 }
@@ -34,12 +34,12 @@ std::string Solicitante::gerarMatriculaAleatoria() {
 tipoSolicitante Solicitante::gerarTipoAleatorio() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    // Ajuste o "2" para a quantidade máxima de opções menos 1 que existem no seu enum tipoSolicitante
+    // ajuste o dois para a quantidade maxima de opcoes menos um do enum tiposolicitante
     std::uniform_int_distribution<> dist(0, 2); 
     return static_cast<tipoSolicitante>(dist(gen));
 }
 
-// --- GETTERS ---
+// getters
 
 std::string Solicitante::getNome() const {
     return nome;
@@ -53,7 +53,7 @@ tipoSolicitante Solicitante::getTipo() const {
     return tipo;
 }
 
-// --- SETTERS ---
+// setters
 
 void Solicitante::setNome(const std::string& nome) {
     this->nome = nome;

@@ -4,6 +4,7 @@
 ListaHistorico::ListaHistorico() : inicio(nullptr) {}
 
 ListaHistorico::~ListaHistorico() {
+    // cada registro foi criado com new entao a lista limpa um por um aqui
     NoHistorico* atual = inicio;
     while (atual != nullptr) {
         NoHistorico* proximo = atual->getProximo();
@@ -13,6 +14,7 @@ ListaHistorico::~ListaHistorico() {
 }
 
 void ListaHistorico::inserir(std::string dataHorario, std::string descricao) {
+    // o historico fica na ordem dos acontecimentos do mais antigo ao mais novo
     NoHistorico* novoNo = new NoHistorico(dataHorario, descricao);
     if (inicio == nullptr) {
         inicio = novoNo;

@@ -2,7 +2,7 @@
 #define ARVOREBST_H
 
 #include "Chamado.h"
-//esqueeda é menor e direta é maior
+// esquerda e menor e direita e maior
 
 struct NoBST {
     Chamado chamado;

@@ -2,12 +2,12 @@
 #include <iostream>
 #include <queue>
 using namespace std;
-// Construtor
+// construtor
 ArvoreBusca::ArvoreBusca() {
     this->raiz = nullptr;
 }
 
-// Destrutor
+// destrutor
 ArvoreBusca::~ArvoreBusca() {
     
     destruirArvore(this->raiz);
@@ -23,7 +23,7 @@ void ArvoreBusca::destruirArvore(NoBST* no) {
     delete no;
 }
 
-// vai procurando um lugar pelo id e não deixa entrar id repetido
+// vai procurando um lugar pelo id e nao deixa entrar id repetido
  NoBST* ArvoreBusca::inserirRecursivo(NoBST* no, const Chamado& chamado, bool& inserido) {
     if (no == nullptr) {
         inserido = true;
@@ -41,6 +41,7 @@ void ArvoreBusca::destruirArvore(NoBST* no) {
  }
 
 bool ArvoreBusca::inserir(Chamado chamado) {
+    // a arvore guarda a copia principal do chamado e a fila aponta para ela depois
     bool inserido = false;
     this->raiz = inserirRecursivo(this->raiz, chamado, inserido);
     return inserido;
@@ -59,11 +60,11 @@ NoBST* ArvoreBusca::localizarRecursivo(NoBST* no, int id) const {
 }
 
 Chamado* ArvoreBusca::localizar(int id) {
+    // a busca so devolve o resultado e quem decide a mensagem e o menu
     NoBST* no = localizarRecursivo(this->raiz, id);
     if (no != nullptr) {
         return &(no->chamado);
     }
-    std::cout << "Chamado com ID " << id << " não encontrado." << std::endl;
     return nullptr;
 }
 
@@ -74,7 +75,7 @@ NoBST* ArvoreBusca::removerRecursivo(NoBST* no, int id, bool& removido) {
     }
 
 
-    // procura o no 
+    // procura o no
     if(id < no->chamado.getId()) {
         no->esquerda = removerRecursivo(no->esquerda, id, removido);
     } else if (id > no->chamado.getId()) {
@@ -83,19 +84,19 @@ NoBST* ArvoreBusca::removerRecursivo(NoBST* no, int id, bool& removido) {
         removido = true;
 
 
-       // Caso 1: Nó com no máximo UM filho (ou nenhum/folha)
+    // caso 1 no com no maximo um filho ou nenhum
         if (no->esquerda == nullptr) {
-            NoBST* temp = no->direita; // Salva o filho da direita (pode ser nullptr)
-            delete no;                  // Libera a memória do nó atual
-            return temp;                // Retorna o filho para reconectar na árvore
+            NoBST* temp = no->direita; // salva o filho da direita pode ser nullptr
+            delete no;                  // libera a memoria do no atual
+            return temp;                // retorna o filho para reconectar na arvore
         } 
         else if (no->direita == nullptr) {
-            NoBST* temp = no->esquerda; // Salva o filho da esquerda
-            delete no;                  // Libera a memória do nó atual
-            return temp;                // Retorna o filho para reconectar na árvore
+            NoBST* temp = no->esquerda; // salva o filho da esquerda
+            delete no;                  // libera a memoria do no atual
+            return temp;                // retorna o filho para reconectar na arvore
         }
 
-        // Caso 2: Nó com DOIS filhos. Transplanta o sucessor sem copiar Chamado.
+        // caso 2 no com dois filhos transplanta o sucessor sem copiar chamado
         NoBST* paiSucessor = no;
         NoBST* sucessor = no->direita;
 
@@ -118,13 +119,14 @@ NoBST* ArvoreBusca::removerRecursivo(NoBST* no, int id, bool& removido) {
 }
 
 bool ArvoreBusca::remover(int identificador) {
+    // a recursao reconecta os filhos para a bst nao perder nenhum galho
     bool removido = false;
     this->raiz = removerRecursivo(this->raiz, identificador, removido);
     return removido;
 }
 
 NoBST* ArvoreBusca::encontrarSucessor(NoBST* raiz, NoBST* alvo) {
-    // Caso 1: Se existe subárvore à direita
+    // caso 1 se existe subarvore a direita
     if (alvo->direita != nullptr) {
         NoBST* atual = alvo->direita;
         while (atual->esquerda != nullptr) {
@@ -133,25 +135,25 @@ NoBST* ArvoreBusca::encontrarSucessor(NoBST* raiz, NoBST* alvo) {
         return atual;
     }
 
-    // Caso 2: Não existe subárvore à direita
+    // caso 2 nao existe subarvore a direita
     NoBST* sucessor = nullptr;
     NoBST* atual = raiz;
 
     while (atual != nullptr) {
         if (alvo->chamado.getId() < atual->chamado.getId()) {
-            sucessor = atual; // Candidato a sucessor
+            sucessor = atual; // candidato a sucessor
             atual = atual->esquerda;
         } else if (alvo->chamado.getId() > atual->chamado.getId()) {
             atual = atual->direita;
         } else {
-            break; // Encontrou o nó alvo na navegação
+            break; // encontrou o no alvo na navegacao
         }
     }
 
     return sucessor;
 }
 
-// passa pela esquerda, pelo nó e pela direita pra mostrar os ids em ordem
+// passa pela esquerda pelo no e pela direita pra mostrar os ids em ordem
 void ArvoreBusca::emOrdem(NoBST* no) const {
     if(no != nullptr) {
         emOrdem(no->esquerda);
@@ -193,6 +195,7 @@ Chamado* ArvoreBusca::obterMaiorIdentificador() {
 }
 
 int ArvoreBusca::calcularAlturaRecursivo(NoBST* no) const {
+    // uma arvore vazia tem altura -1 assim uma folha fica com altura zero
     if (no == nullptr) return -1;
 
     int alturaEsq = calcularAlturaRecursivo(no->esquerda);
@@ -268,7 +271,7 @@ void ArvoreBusca::percursoPosOrdem() {
     std::cout << "\n";
 }
 
-// usa uma fila pra mostrar um nível da árvore de cada vez
+// usa uma fila pra mostrar um nivel da arvore de cada vez
 void ArvoreBusca::percursoEmLargura() {
     if (raiz == nullptr) {
         std::cout << "Arvore vazia.\n";
