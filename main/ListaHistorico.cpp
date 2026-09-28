@@ -2,8 +2,30 @@
 #include <iostream>
 #include <ctime>
 #include <string>
+#include <utility>
 
 ListaHistorico::ListaHistorico() : inicio(nullptr) {}
+
+ListaHistorico::ListaHistorico(const ListaHistorico& outra) : inicio(nullptr) {
+    for (NoHistorico* atual = outra.inicio; atual != nullptr; atual = atual->getProximo()) {
+        NoHistorico* novoNo = new NoHistorico(atual->getDataHorario(), atual->getDescricao());
+        if (inicio == nullptr) {
+            inicio = novoNo;
+        } else {
+            NoHistorico* fim = inicio;
+            while (fim->getProximo() != nullptr) fim = fim->getProximo();
+            fim->setProximo(novoNo);
+        }
+    }
+}
+
+ListaHistorico& ListaHistorico::operator=(const ListaHistorico& outra) {
+    if (this == &outra) return *this;
+
+    ListaHistorico copia(outra);
+    std::swap(inicio, copia.inicio);
+    return *this;
+}
 
 ListaHistorico::~ListaHistorico() {
     NoHistorico* atual = inicio;

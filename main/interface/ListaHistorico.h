@@ -7,6 +7,8 @@ private:
 
 public:
     ListaHistorico();
+    ListaHistorico(const ListaHistorico& outra);
+    ListaHistorico& operator=(const ListaHistorico& outra);
     ~ListaHistorico();
 
     void inserir(std::string descricao);
