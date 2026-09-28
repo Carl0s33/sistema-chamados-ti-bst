@@ -1,5 +1,7 @@
 #include "interface/ListaHistorico.h"
 #include <iostream>
+#include <ctime>
+#include <string>
 
 ListaHistorico::ListaHistorico() : inicio(nullptr) {}
 
@@ -12,8 +14,18 @@ ListaHistorico::~ListaHistorico() {
     }
 }
 
-void ListaHistorico::inserir(std::string dataHorario, std::string descricao) {
+void ListaHistorico::inserir(std::string descricao) {
+    // Pega a data/hora atual
+    std::time_t agora = std::time(nullptr);
+    std::tm* tempoLocal = std::localtime(&agora);
+
+    // Formata como "dd/mm/aaaa HH:MM:SS"
+    char buffer[20];
+    std::strftime(buffer, sizeof(buffer), "%d/%m/%Y %H:%M:%S", tempoLocal);
+    std::string dataHorario(buffer);
+
     NoHistorico* novoNo = new NoHistorico(dataHorario, descricao);
+
     if (inicio == nullptr) {
         inicio = novoNo;
     } else {

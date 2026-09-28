@@ -9,6 +9,6 @@ public:
     ListaHistorico();
     ~ListaHistorico();
 
-    void inserir(std::string dataHorario, std::string descricao);
+    void inserir(std::string descricao);
     void listarHistorico() const;
 };
