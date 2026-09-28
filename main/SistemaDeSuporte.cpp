@@ -17,14 +17,6 @@ std::string dataHoraAtual() {
     return texto.str();
 }
 
-bool lerTexto(const char* mensagem, std::string& valor) {
-    while (true) {
-        std::cout << mensagem;
-        if (!std::getline(std::cin, valor)) return false;
-        if (valor.find_first_not_of(" \t\r") != std::string::npos) return true;
-        std::cout << "Erro: Este campo nao pode ficar vazio.\n";
-    }
-}
 
 bool lerInteiro(int& valor) {
     std::string linha;
