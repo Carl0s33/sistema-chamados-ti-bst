@@ -9,13 +9,8 @@
 using namespace std;
 
 namespace {
-std::string dataHoraAtual() {
-    std::time_t agora = std::time(nullptr);
-    std::tm* horario = std::localtime(&agora);
-    std::ostringstream texto;
-    if (horario != nullptr) texto << std::put_time(horario, "%d/%m/%Y %H:%M:%S");
-    return texto.str();
-}
+
+
 
 bool lerInteiro(int& valor) {
     // ler a linha inteira evita sobrar lixo no buffer para a proxima pergunta
@@ -78,13 +73,11 @@ void SistemaDeSuporte::executar() {
 
         switch (opcao) {
             case 1: {
-                cout << "\n--- Abrir Chamado ---" << endl;
-                // os dados variam a cada abertura para facilitar os testes da bst
                 Chamado novoChamado;
                 
                 if (arvore.inserir(novoChamado)) {
-                    arvore.localizar(novoChamado.getId())->getHistorico().inserir(dataHoraAtual(), "Chamado aberto no sistema.");
-                    cout << "Chamado #" << novoChamado.getId() << " aberto com sucesso!" << endl;
+                    // arvore.localizar(novoChamado.getId())->getHistorico().inserir(dataHoraAtual(), "Chamado aberto no sistema.");
+                    // cout << "Chamado #" << novoChamado.getId() << " aberto com sucesso!" << endl;
                     novoChamado.imprimir();
                 } else {
                     cout << "Erro: Ja existe um chamado com este ID." << endl;
@@ -103,6 +96,7 @@ void SistemaDeSuporte::executar() {
                 Chamado* c = arvore.localizar(idBusca);
                 if (c != nullptr) {
                     c->imprimir();
+                    c->imprimirHistorico();
                 } else {
                     cout << "Chamado nao encontrado!" << endl;
                 }
@@ -118,9 +112,7 @@ void SistemaDeSuporte::executar() {
                 }
 
                 if (arvore.remover(idRemover)) {
-                    cout << "Chamado #" << idRemover << " removido com sucesso!" << endl;
-                } else {
-                    cout << "Chamado nao encontrado na arvore." << endl;
+                    cout << "Chamado com o id: " << idRemover << " não encontrado." << endl;
                 }
                 break;
             }
@@ -150,25 +142,7 @@ void SistemaDeSuporte::executar() {
             }
             case 6: {
                 cout << "\n--- Encaminhar Chamado para Atendimento ---" << endl;
-                // a fila guarda ponteiros e nao novas copias dos chamados
-                int idEncaminhar;
-                cout << "Digite o ID do chamado aberto para a fila: ";
-                if (!lerInteiro(idEncaminhar)) {
-                    if (cin.eof() || cin.bad()) return;
-                    break;
-                }
-
-                Chamado* c = arvore.localizar(idEncaminhar);
-                if (c != nullptr) {
-                    if (fila.enfileirar(c)) {
-                        c->getHistorico().inserir(dataHoraAtual(), "Encaminhado para a fila de atendimento.");
-                        cout << "Chamado #" << idEncaminhar << " adicionado a fila com sucesso!" << endl;
-                    } else {
-                        cout << "Chamado deve estar aberto e nao pode estar repetido na fila." << endl;
-                    }
-                } else {
-                    cout << "Chamado nao encontrado!" << endl;
-                }
+                arvore.enfileiraChamados(fila);
                 break;
             }
             case 7: {
@@ -177,7 +151,7 @@ void SistemaDeSuporte::executar() {
                 if (c != nullptr) {
                     c->setStatus(Status::EM_ANDAMENTO);
                     cout << "Tecnico iniciou o atendimento do chamado #" << c->getId() << endl;
-                    c->getHistorico().inserir(dataHoraAtual(), "Tecnico iniciou o atendimento.");
+                    c->getHistorico().inserir("Tecnico iniciou o atendimento.");
                     c->imprimir();
                 } else {
                     cout << "A fila de atendimento esta vazia!" << endl;
@@ -225,7 +199,7 @@ void SistemaDeSuporte::executar() {
                 const char* nomes[] = {"Aberto", "Em atendimento", "Resolvido", "Cancelado"};
                 string registro = string("Status alterado de ") + nomes[static_cast<int>(c->getStatus())]
                     + " para " + nomes[escolha - 1] + ".";
-                c->getHistorico().inserir(dataHoraAtual(), registro);
+                c->getHistorico().inserir( registro);
                 c->setStatus(novoStatus);
                 cout << "Status do chamado #" << id << " alterado com sucesso!" << endl;
                 break;

@@ -23,8 +23,11 @@ Chamado::Chamado()
       descricao(gerarDescricaoAleatoria()),
       categoria(gerarCategoriaAleatoria()),
       prioridade(gerarPrioridadeAleatoria()),
-            // chamado novo sempre comeca aberto depois ele caminha pelo atendimento
-            status(Status::ABERTO) {}
+      status(gerarStatusAleatorio()),
+      historico()
+       {
+        historico.inserir("Chamado aberto no sistema.");
+       }
 
 // getters
 
@@ -91,6 +94,12 @@ void Chamado::imprimir() const {
     std::cout << "========================================" << std::endl;
 }
 
+void Chamado::imprimirHistorico() const {
+    std::cout << "----------- HISTÓRICO DO CHAMADO #" << id << " -----------" << std::endl;
+    historico.listarHistorico();
+    std::cout << "-------------------------------------------------" << std::endl;
+}
+
 
 
 string Chamado::gerarDescricaoAleatoria() {
@@ -125,14 +134,15 @@ Prioridade Chamado::gerarPrioridadeAleatoria() {
 Status Chamado::gerarStatusAleatorio() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, 3); // ajuste conforme a quantidade de itens do enum status
+    std::uniform_int_distribution<> dist(0, 3); 
     return static_cast<Status>(dist(gen));
 }
 
 int Chamado::gerarIdAleatorio() {
-    // o nome ficou antigo mas a ideia aqui e simples id unico e sem colisao
-    static int proximoId = 1001;
-    return proximoId++;
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(1000, 9999); 
+    return dist(gen);
 }
 
 

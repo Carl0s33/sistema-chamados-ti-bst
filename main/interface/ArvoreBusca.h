@@ -2,7 +2,8 @@
 #define ARVOREBST_H
 
 #include "Chamado.h"
-// esquerda e menor e direita e maior
+#include "FilaChamados.h"
+//esqueeda é menor e direta é maior
 
 struct NoBST {
     Chamado chamado;
@@ -29,6 +30,7 @@ private:
     int contarNosRecursivo(NoBST* no) const;
     int contarPorStatusRecursivo(NoBST* no, Status status) const;
     void destruirArvore(NoBST* no);
+    void enfileiraChamadoRecursivo(NoBST* no, FilaChamados& filaDeAtendimento) const;
 
 public:
     ArvoreBusca();
@@ -47,6 +49,7 @@ public:
     void percursoPreOrdem();
     void percursoPosOrdem();
     void percursoEmLargura();
+    void enfileiraChamados(FilaChamados& filaDeAtendimento) const;
 };
 
 #endif
