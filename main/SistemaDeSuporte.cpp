@@ -13,6 +13,7 @@ namespace {
 
 
 bool lerInteiro(int& valor) {
+    // ler a linha inteira evita sobrar lixo no buffer para a proxima pergunta
     std::string linha;
     if (!std::getline(std::cin, linha)) return false;
     std::istringstream entrada(linha);
@@ -25,6 +26,7 @@ bool lerInteiro(int& valor) {
 }
 
 bool lerEscolha(const char* mensagem, int minimo, int maximo, int& valor) {
+    // o usuario pode errar e a funcao insiste ate receber uma opcao valida
     while (true) {
         std::cout << mensagem;
         if (!lerInteiro(valor)) {
@@ -85,7 +87,7 @@ void SistemaDeSuporte::executar() {
             case 2: {
                 cout << "\n--- Buscar Chamado ---" << endl;
                 int idBusca;
-                cout << "Digite o ID do chamado: ";
+                cout << "Digite o ID do chamado exibido ao abrir: ";
                 if (!lerInteiro(idBusca)) {
                     if (cin.eof() || cin.bad()) return;
                     break;
@@ -176,6 +178,7 @@ void SistemaDeSuporte::executar() {
             }
             case 9: {
                 cout << "\n--- Alterar Status ---" << endl;
+                // o historico registra a mudanca antes de trocar o estado atual
                 int id, escolha;
                 cout << "Digite o ID do chamado: ";
                 if (!lerInteiro(id)) {

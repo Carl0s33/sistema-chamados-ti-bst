@@ -48,7 +48,7 @@ class Chamado {
     Status getStatus() const;
   
 
-    // Setters
+    // setters
     void setId(int id);
     void setDescricao(std::string& descricao);
     void setCategoria(Categoria categoria);

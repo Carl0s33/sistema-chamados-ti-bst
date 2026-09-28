@@ -10,7 +10,7 @@ public:
     FilaChamados();
     ~FilaChamados();
 
-    void enfileirar(Chamado* c);
+    bool enfileirar(Chamado* c);
     Chamado* desenfileirar();
     Chamado* getFrente() const;
     bool estaVazia() const;

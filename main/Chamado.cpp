@@ -16,7 +16,7 @@ Chamado::Chamado(int id)
       prioridade(gerarPrioridadeAleatoria()),
       status(gerarStatusAleatorio()) {}
 
-// Construtor Parametrizado utilizando Lista de Inicialização
+// construtor parametrizado utilizando lista de inicializacao
 Chamado::Chamado()
     : id(gerarIdAleatorio()),
       solicitante(),
@@ -29,7 +29,7 @@ Chamado::Chamado()
         historico.inserir("Chamado aberto no sistema.");
        }
 
-// --- GETTERS ---
+// getters
 
 int Chamado::getId() const {
     return id;
@@ -57,7 +57,7 @@ Status Chamado::getStatus() const {
 ListaHistorico& Chamado::getHistorico() {
     return historico;
 }
-// --- SETTERS ---
+// setters
 
 void Chamado::setId(int id) {
     this->id = id;
@@ -119,7 +119,7 @@ Categoria Chamado::gerarCategoriaAleatoria() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(
-        0, static_cast<int>(Categoria::OUTROS));
+        0, static_cast<int>(Categoria::ACESSO));
     return static_cast<Categoria>(dist(gen));
 }
 
@@ -146,7 +146,7 @@ int Chamado::gerarIdAleatorio() {
 }
 
 
-// cast dos enums
+// conversao dos enums
 
 string Chamado::categoriaParaTexto() const {
     switch (categoria) {

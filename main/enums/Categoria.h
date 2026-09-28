@@ -5,8 +5,7 @@ enum class Categoria {
     SOFTWARE,
     REDE,
     SISTEMA,
-    ACESSO,
-    OUTROS
+    ACESSO
 };
 
 

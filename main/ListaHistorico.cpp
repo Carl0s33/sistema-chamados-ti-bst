@@ -28,6 +28,7 @@ ListaHistorico& ListaHistorico::operator=(const ListaHistorico& outra) {
 }
 
 ListaHistorico::~ListaHistorico() {
+    // cada registro foi criado com new entao a lista limpa um por um aqui
     NoHistorico* atual = inicio;
     while (atual != nullptr) {
         NoHistorico* proximo = atual->getProximo();

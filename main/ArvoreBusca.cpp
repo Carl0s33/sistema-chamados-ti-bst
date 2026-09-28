@@ -23,7 +23,7 @@ void ArvoreBusca::destruirArvore(NoBST* no) {
     delete no;
 }
 
-// vai procurando um lugar pelo id e não deixa entrar id repetido
+// vai procurando um lugar pelo id e nao deixa entrar id repetido
  NoBST* ArvoreBusca::inserirRecursivo(NoBST* no, const Chamado& chamado, bool& inserido) {
     if (no == nullptr) {
         inserido = true;
@@ -41,6 +41,7 @@ void ArvoreBusca::destruirArvore(NoBST* no) {
  }
 
 bool ArvoreBusca::inserir(Chamado chamado) {
+    // a arvore guarda a copia principal do chamado e a fila aponta para ela depois
     bool inserido = false;
     this->raiz = inserirRecursivo(this->raiz, chamado, inserido);
     return inserido;
@@ -59,6 +60,7 @@ NoBST* ArvoreBusca::localizarRecursivo(NoBST* no, int id) const {
 }
 
 Chamado* ArvoreBusca::localizar(int id) {
+    // a busca so devolve o resultado e quem decide a mensagem e o menu
     NoBST* no = localizarRecursivo(this->raiz, id);
     if (no != nullptr) {
         return &(no->chamado);
@@ -73,12 +75,14 @@ NoBST* ArvoreBusca::removerRecursivo(NoBST* no, int id, bool& removido) {
     }
 
 
+
     if(id < no->chamado.getId()) {
         no->esquerda = removerRecursivo(no->esquerda, id, removido);
     } else if (id > no->chamado.getId()) {
         no->direita = removerRecursivo(no->direita, id, removido);
     } else {
         removido = true;
+
 
 
 
@@ -92,6 +96,7 @@ NoBST* ArvoreBusca::removerRecursivo(NoBST* no, int id, bool& removido) {
             delete no;                  
             return temp;                
         }
+
 
         NoBST* paiSucessor = no;
         NoBST* sucessor = no->direita;
@@ -115,6 +120,7 @@ NoBST* ArvoreBusca::removerRecursivo(NoBST* no, int id, bool& removido) {
 }
 
 bool ArvoreBusca::remover(int identificador) {
+    // a recursao reconecta os filhos para a bst nao perder nenhum galho
     bool removido = false;
     this->raiz = removerRecursivo(this->raiz, identificador, removido);
     return removido;
@@ -188,6 +194,7 @@ Chamado* ArvoreBusca::obterMaiorIdentificador() {
 }
 
 int ArvoreBusca::calcularAlturaRecursivo(NoBST* no) const {
+    // uma arvore vazia tem altura -1 assim uma folha fica com altura zero
     if (no == nullptr) return -1;
 
     int alturaEsq = calcularAlturaRecursivo(no->esquerda);
@@ -263,7 +270,7 @@ void ArvoreBusca::percursoPosOrdem() {
     std::cout << "\n";
 }
 
-// usa uma fila pra mostrar um nível da árvore de cada vez
+// usa uma fila pra mostrar um nivel da arvore de cada vez
 void ArvoreBusca::percursoEmLargura() {
     if (raiz == nullptr) {
         std::cout << "Arvore vazia.\n";

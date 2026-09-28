@@ -11,6 +11,7 @@ std::string NoHistorico::getDescricao() const {
 }
 
 NoHistorico* NoHistorico::getProximo() const {
+    // esse ponteiro e a ligacao que transforma os registros numa lista
     return proximo;
 }
 
