@@ -39,6 +39,7 @@ class Chamado {
 
    ListaHistorico& getHistorico();
     int getId() const;  
+    void imprimirHistorico() const;
     
     Solicitante getSolicitante() const;
     std::string getDescricao() const;

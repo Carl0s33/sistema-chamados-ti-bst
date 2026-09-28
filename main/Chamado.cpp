@@ -23,7 +23,11 @@ Chamado::Chamado()
       descricao(gerarDescricaoAleatoria()),
       categoria(gerarCategoriaAleatoria()),
       prioridade(gerarPrioridadeAleatoria()),
-      status(gerarStatusAleatorio()) {}
+      status(gerarStatusAleatorio()),
+      historico()
+       {
+        historico.inserir("Chamado aberto no sistema.");
+       }
 
 // --- GETTERS ---
 
@@ -88,6 +92,12 @@ void Chamado::imprimir() const {
     std::cout << "Prioridade  : " << prioridadeParaTexto() << std::endl;
     std::cout << "Status      : " << statusParaTexto()     << std::endl;
     std::cout << "========================================" << std::endl;
+}
+
+void Chamado::imprimirHistorico() const {
+    std::cout << "----------- HISTÓRICO DO CHAMADO #" << id << " -----------" << std::endl;
+    historico.listarHistorico();
+    std::cout << "-------------------------------------------------" << std::endl;
 }
 
 
