@@ -145,21 +145,7 @@ void SistemaDeSuporte::executar() {
             }
             case 6: {
                 cout << "\n--- Encaminhar Chamado para Atendimento ---" << endl;
-                int idEncaminhar;
-                cout << "Digite o ID do chamado aberto para a fila: ";
-                if (!lerInteiro(idEncaminhar)) {
-                    if (cin.eof() || cin.bad()) return;
-                    break;
-                }
-
-                Chamado* c = arvore.localizar(idEncaminhar);
-                if (c != nullptr) {
-                    fila.enfileirar(c);
-                    c->getHistorico().inserir(dataHoraAtual(), "Encaminhado para a fila de atendimento.");
-                    cout << "Chamado #" << idEncaminhar << " adicionado a fila com sucesso!" << endl;
-                } else {
-                    cout << "Chamado nao encontrado!" << endl;
-                }
+                arvore.enfileiraChamados(fila);
                 break;
             }
             case 7: {

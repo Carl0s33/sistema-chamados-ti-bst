@@ -296,3 +296,28 @@ void ArvoreBusca::posOrdemRecursivo(NoBST* no) const {
     posOrdemRecursivo(no->direita);
     std::cout << no->chamado.getId() << " ";
 }
+
+
+void ArvoreBusca::enfileiraChamadoRecursivo(NoBST* no, FilaChamados& filaDeAtendimento) const {
+    if (no == nullptr) {
+        return;
+    }
+
+    // Percorrer a subárvore esquerda
+    enfileiraChamadoRecursivo(no->esquerda, filaDeAtendimento);
+
+    // Verificar se o estado do chamado é ABERTO
+    if (no->chamado.getStatus() == Status::ABERTO) {
+        filaDeAtendimento.enfileirar(&(no->chamado));
+        std::cout << "Chamado enfileirado: #" << no->chamado.getId() << "\n";
+        no->chamado.setStatus(Status::EM_ESPERA);
+    }
+
+    // Percorrer a subárvore direita
+    enfileiraChamadoRecursivo(no->direita, filaDeAtendimento);
+}
+
+// Método principal para iniciar o carregamento da fila
+void ArvoreBusca::enfileiraChamados(FilaChamados& filaDeAtendimento) const {
+    enfileiraChamadoRecursivo(this->raiz, filaDeAtendimento);
+}
