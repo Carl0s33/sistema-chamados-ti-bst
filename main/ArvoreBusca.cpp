@@ -63,7 +63,6 @@ Chamado* ArvoreBusca::localizar(int id) {
     if (no != nullptr) {
         return &(no->chamado);
     }
-    std::cout << "Chamado com ID " << id << " não encontrado." << std::endl;
     return nullptr;
 }
 
