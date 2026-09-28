@@ -310,7 +310,9 @@ void ArvoreBusca::enfileiraChamadoRecursivo(NoBST* no, FilaChamados& filaDeAtend
     if (no->chamado.getStatus() == Status::ABERTO) {
         filaDeAtendimento.enfileirar(&(no->chamado));
         std::cout << "Chamado enfileirado: #" << no->chamado.getId() << "\n";
+        no->chamado.getHistorico().inserir("Chamado enfileirado para atendimento.");
         no->chamado.setStatus(Status::EM_ESPERA);
+        
     }
 
     // Percorrer a subárvore direita
