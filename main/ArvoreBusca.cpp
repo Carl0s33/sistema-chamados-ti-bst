@@ -2,12 +2,12 @@
 #include <iostream>
 #include <queue>
 using namespace std;
-// Construtor
+
 ArvoreBusca::ArvoreBusca() {
     this->raiz = nullptr;
 }
 
-// Destrutor
+
 ArvoreBusca::~ArvoreBusca() {
     
     destruirArvore(this->raiz);
@@ -74,7 +74,6 @@ NoBST* ArvoreBusca::removerRecursivo(NoBST* no, int id, bool& removido) {
     }
 
 
-    // procura o no 
     if(id < no->chamado.getId()) {
         no->esquerda = removerRecursivo(no->esquerda, id, removido);
     } else if (id > no->chamado.getId()) {
@@ -83,19 +82,18 @@ NoBST* ArvoreBusca::removerRecursivo(NoBST* no, int id, bool& removido) {
         removido = true;
 
 
-       // Caso 1: Nó com no máximo UM filho (ou nenhum/folha)
+
         if (no->esquerda == nullptr) {
-            NoBST* temp = no->direita; // Salva o filho da direita (pode ser nullptr)
-            delete no;                  // Libera a memória do nó atual
-            return temp;                // Retorna o filho para reconectar na árvore
+            NoBST* temp = no->direita; 
+            delete no;                  
+            return temp;                
         } 
         else if (no->direita == nullptr) {
-            NoBST* temp = no->esquerda; // Salva o filho da esquerda
-            delete no;                  // Libera a memória do nó atual
-            return temp;                // Retorna o filho para reconectar na árvore
+            NoBST* temp = no->esquerda; 
+            delete no;                  
+            return temp;                
         }
 
-        // Caso 2: Nó com DOIS filhos. Transplanta o sucessor sem copiar Chamado.
         NoBST* paiSucessor = no;
         NoBST* sucessor = no->direita;
 
@@ -124,7 +122,7 @@ bool ArvoreBusca::remover(int identificador) {
 }
 
 NoBST* ArvoreBusca::encontrarSucessor(NoBST* raiz, NoBST* alvo) {
-    // Caso 1: Se existe subárvore à direita
+
     if (alvo->direita != nullptr) {
         NoBST* atual = alvo->direita;
         while (atual->esquerda != nullptr) {
@@ -133,25 +131,23 @@ NoBST* ArvoreBusca::encontrarSucessor(NoBST* raiz, NoBST* alvo) {
         return atual;
     }
 
-    // Caso 2: Não existe subárvore à direita
     NoBST* sucessor = nullptr;
     NoBST* atual = raiz;
 
     while (atual != nullptr) {
         if (alvo->chamado.getId() < atual->chamado.getId()) {
-            sucessor = atual; // Candidato a sucessor
+            sucessor = atual; 
             atual = atual->esquerda;
         } else if (alvo->chamado.getId() > atual->chamado.getId()) {
             atual = atual->direita;
         } else {
-            break; // Encontrou o nó alvo na navegação
+            break; 
         }
     }
 
     return sucessor;
 }
 
-// passa pela esquerda, pelo nó e pela direita pra mostrar os ids em ordem
 void ArvoreBusca::emOrdem(NoBST* no) const {
     if(no != nullptr) {
         emOrdem(no->esquerda);

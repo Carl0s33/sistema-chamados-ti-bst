@@ -124,14 +124,14 @@ Prioridade Chamado::gerarPrioridadeAleatoria() {
 Status Chamado::gerarStatusAleatorio() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, 3); // Ajuste conforme a quantidade de itens do Enum Status
+    std::uniform_int_distribution<> dist(0, 3); 
     return static_cast<Status>(dist(gen));
 }
 
 int Chamado::gerarIdAleatorio() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dist(1000, 9999); // Gera IDs entre 1000 e 9999
+    std::uniform_int_distribution<int> dist(1000, 9999); 
     return dist(gen);
 }
 
