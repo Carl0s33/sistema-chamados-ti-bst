@@ -9,13 +9,7 @@
 using namespace std;
 
 namespace {
-std::string dataHoraAtual() {
-    std::time_t agora = std::time(nullptr);
-    std::tm* horario = std::localtime(&agora);
-    std::ostringstream texto;
-    if (horario != nullptr) texto << std::put_time(horario, "%d/%m/%Y %H:%M:%S");
-    return texto.str();
-}
+
 
 
 bool lerInteiro(int& valor) {
@@ -100,6 +94,7 @@ void SistemaDeSuporte::executar() {
                 Chamado* c = arvore.localizar(idBusca);
                 if (c != nullptr) {
                     c->imprimir();
+                    c->imprimirHistorico();
                 } else {
                     cout << "Chamado nao encontrado!" << endl;
                 }
@@ -154,7 +149,7 @@ void SistemaDeSuporte::executar() {
                 if (c != nullptr) {
                     c->setStatus(Status::EM_ANDAMENTO);
                     cout << "Tecnico iniciou o atendimento do chamado #" << c->getId() << endl;
-                    c->getHistorico().inserir(dataHoraAtual(), "Tecnico iniciou o atendimento.");
+                    c->getHistorico().inserir("Tecnico iniciou o atendimento.");
                     c->imprimir();
                 } else {
                     cout << "A fila de atendimento esta vazia!" << endl;
@@ -201,7 +196,7 @@ void SistemaDeSuporte::executar() {
                 const char* nomes[] = {"Aberto", "Em atendimento", "Resolvido", "Cancelado"};
                 string registro = string("Status alterado de ") + nomes[static_cast<int>(c->getStatus())]
                     + " para " + nomes[escolha - 1] + ".";
-                c->getHistorico().inserir(dataHoraAtual(), registro);
+                c->getHistorico().inserir( registro);
                 c->setStatus(novoStatus);
                 cout << "Status do chamado #" << id << " alterado com sucesso!" << endl;
                 break;
