@@ -30,7 +30,7 @@ private:
     int contarNosRecursivo(NoBST* no) const;
     int contarPorStatusRecursivo(NoBST* no, Status status) const;
     void destruirArvore(NoBST* no);
-    void enfileiraChamadoRecursivo(NoBST* no, FilaChamados& filaDeAtendimento) const;
+  void enfileiraChamadoRecursivo(NoBST* no, FilaChamados& filaDeAtendimento, int& restante) const;
 
 public:
     ArvoreBusca();
@@ -49,7 +49,7 @@ public:
     void percursoPreOrdem();
     void percursoPosOrdem();
     void percursoEmLargura();
-    void enfileiraChamados(FilaChamados& filaDeAtendimento) const;
+void enfileiraChamados(FilaChamados& filaDeAtendimento, int quantidade) const;
 };
 
 #endif

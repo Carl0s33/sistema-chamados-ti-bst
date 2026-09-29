@@ -153,7 +153,26 @@ void SistemaDeSuporte::executar() {
             }
             case 6: {
                 cout << "\n--- Encaminhar Chamado para Atendimento ---" << endl;
-                arvore.enfileiraChamados(fila);
+
+                // 1. Mostra as estatísticas da árvore
+                exibirEstatisticas();
+
+                // 2. Só faz sentido pedir a quantidade se houver chamados abertos
+                int abertos = arvore.contarPorStatus(Status::ABERTO);
+                if (abertos == 0) {
+                    cout << "\nNao ha chamados abertos para encaminhar." << endl;
+                    break;
+                }
+
+                // 3. Pede a quantidade (de 1 até o total de abertos)
+                int quantidade;
+                string mensagem = "\nQuantos chamados deseja encaminhar para a fila (1 a "
+                                + to_string(abertos) + ")? ";
+                if (!lerEscolha(mensagem.c_str(), 1, abertos, quantidade)) return;
+
+                // 4. Enfileira apenas essa quantidade
+                arvore.enfileiraChamados(fila, quantidade);
+                cout << "\n" << quantidade << " chamado(s) encaminhado(s) para a fila." << endl;
                 break;
             }
             case 7: {
