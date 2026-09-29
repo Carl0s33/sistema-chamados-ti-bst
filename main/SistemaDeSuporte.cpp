@@ -111,7 +111,9 @@ void SistemaDeSuporte::executar() {
                     break;
                 }
 
-                if (arvore.remover(idRemover)) {
+               if (arvore.remover(idRemover)) {
+                    cout << "Chamado com o id: " << idRemover << " removido com sucesso." << endl;
+                } else {
                     cout << "Chamado com o id: " << idRemover << " não encontrado." << endl;
                 }
                 break;
