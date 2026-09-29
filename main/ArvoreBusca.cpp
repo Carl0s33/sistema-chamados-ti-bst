@@ -305,28 +305,32 @@ void ArvoreBusca::posOrdemRecursivo(NoBST* no) const {
 }
 
 
-void ArvoreBusca::enfileiraChamadoRecursivo(NoBST* no, FilaChamados& filaDeAtendimento) const {
-    if (no == nullptr) {
+void ArvoreBusca::enfileiraChamadoRecursivo(NoBST* no, FilaChamados& filaDeAtendimento, int& restante) const {
+    // Para se chegou ao fim da árvore ou já enfileirou a quantidade pedida
+    if (no == nullptr || restante <= 0) {
         return;
     }
 
     // Percorrer a subárvore esquerda
-    enfileiraChamadoRecursivo(no->esquerda, filaDeAtendimento);
+    enfileiraChamadoRecursivo(no->esquerda, filaDeAtendimento, restante);
 
-    // Verificar se o estado do chamado é ABERTO
-    if (no->chamado.getStatus() == Status::ABERTO) {
+    // Só enfileira se ainda houver cota e o chamado estiver ABERTO
+    if (restante > 0 && no->chamado.getStatus() == Status::ABERTO) {
         filaDeAtendimento.enfileirar(&(no->chamado));
         std::cout << "Chamado enfileirado: #" << no->chamado.getId() << "\n";
         no->chamado.getHistorico().inserir("Chamado enfileirado para atendimento.");
         no->chamado.setStatus(Status::EM_ESPERA);
-        
+        restante--;   // consumiu uma vaga
     }
 
     // Percorrer a subárvore direita
-    enfileiraChamadoRecursivo(no->direita, filaDeAtendimento);
+    enfileiraChamadoRecursivo(no->direita, filaDeAtendimento, restante);
 }
 
 // Método principal para iniciar o carregamento da fila
-void ArvoreBusca::enfileiraChamados(FilaChamados& filaDeAtendimento) const {
-    enfileiraChamadoRecursivo(this->raiz, filaDeAtendimento);
+void ArvoreBusca::enfileiraChamados(FilaChamados& filaDeAtendimento, int quantidade) const {
+    int restante = quantidade;
+    enfileiraChamadoRecursivo(this->raiz, filaDeAtendimento, restante);
 }
+
+

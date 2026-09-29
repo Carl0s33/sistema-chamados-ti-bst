@@ -16,6 +16,17 @@ Chamado::Chamado(int id)
       prioridade(gerarPrioridadeAleatoria()),
       status(gerarStatusAleatorio()) {}
 
+Chamado::Chamado(Status status)
+    : id(gerarIdAleatorio()),
+      solicitante(),
+      descricao(gerarDescricaoAleatoria()),
+      categoria(gerarCategoriaAleatoria()),
+      prioridade(gerarPrioridadeAleatoria()),
+      status(status),
+      historico() {
+    historico.inserir("Chamado aberto no sistema.");
+}
+
 // construtor parametrizado utilizando lista de inicializacao
 Chamado::Chamado()
     : id(gerarIdAleatorio()),

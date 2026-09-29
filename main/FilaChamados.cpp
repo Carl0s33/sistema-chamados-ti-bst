@@ -61,6 +61,7 @@ Chamado* FilaChamados::desenfileirar() {
     
     delete temp; // libera apenas o no da fila e nao o chamado que esta na bst
     --quantidade;
+
     return c;
 }
 
