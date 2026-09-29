@@ -3,32 +3,31 @@
 #include <string>
 #include "../enums/tipoSolicitante.h"
 
-using namespace std;
 
 class Solicitante {
 private:
-    string nome;
-    string matricula;
+    std::string nome;
+    std::string matricula;
     tipoSolicitante tipo;
 
-    static string gerarNomeAleatorio();
-    static string gerarMatriculaAleatoria();
+    static std::string gerarNomeAleatorio();
+    static std::string gerarMatriculaAleatoria();
     static tipoSolicitante gerarTipoAleatorio();
 
 public:
     Solicitante();
 
-    Solicitante(string nome, string matricula, tipoSolicitante tipo);
+    Solicitante(std::string nome, std::string matricula, tipoSolicitante tipo);
 
     void imprimir() const;
 
-    // Getters
-    string getNome() const;
-    string getMatricula() const;
+    // getters
+    std::string getNome() const;
+    std::string getMatricula() const;
     tipoSolicitante getTipo() const;
 
-    // Setters
-    void setNome(const string& nome);
-    void setMatricula(const string& matricula);
+    // setters
+    void setNome(const std::string& nome);
+    void setMatricula(const std::string& matricula);
     void setTipo(tipoSolicitante tipo);
 };

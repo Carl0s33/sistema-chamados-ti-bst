@@ -1,31 +1,33 @@
+#include "interface/SistemaDeSuporte.h"
 #include <iostream>
+
+#ifdef _WIN32
 #include <windows.h>
-#include "interface/Chamado.h"
-#include "interface/ListaHistorico.h"
-#include "interface/ArvoreBusca.h"
+#endif
+
 
 int main() {
-    SetConsoleOutputCP(CP_UTF8);
 
+
+    //  ArvoreBusca arvore;
+    // Chamado chamado1(1);
+    // arvore.inserir(chamado1);
+ 
+    // for(int i = 0; i < 7 ;i++) {
+    //   Chamado chamado{};
+    //   bool inserido = arvore.inserir(chamado);
+    //   std::cout << "contador " << i << ": ID " << chamado.getId()
+    //             << (inserido ? " inserido" : " duplicado") << std::endl;
+    // }
+
+    // // arvore.listarOrdemCrescente();
     
+    //  Chamado* chamadoEncontrado = arvore.obterMaiorIdentificador();
+    // chamadoEncontrado->imprimir();
 
 
-
-  Chamado chamado1(1);
-  chamado1.imprimir();
-
-  ArvoreBusca arvore;
-  arvore.inserir(chamado1);
-
-
-    // 2. Insere um evento de teste no histórico do chamado
-    chamado1.getHistorico().inserir("08/09/2026 07:34", "Chamado aberto no sistema.");
-    chamado1.getHistorico().inserir("08/09/2026 07:45", "Equipe tecnica notificada.");
-
-
-    // 3. Consulta e exibe o histórico na tela
-    std::cout << "\n=== HISTORICO DE TRAMITACAO ===" << std::endl;
-    chamado1.getHistorico().listarHistorico();
+    SistemaDeSuporte sistema;
+    sistema.executar();
 
     return 0;
 }

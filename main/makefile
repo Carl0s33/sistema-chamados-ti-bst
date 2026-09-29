@@ -9,6 +9,7 @@ SRC = main.cpp \
       ArvoreBusca.cpp \
       FilaChamados.cpp \
       NoFila.cpp \
+      SistemaDeSuporte.cpp
 
 TARGET = main.exe
 

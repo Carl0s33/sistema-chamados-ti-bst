@@ -3,11 +3,11 @@
 #include <iostream>
 using namespace std;
 
+Chamado::Chamado(const Solicitante& solicitante, const std::string& descricao,
+                 Categoria categoria, Prioridade prioridade)
+    : id(gerarIdAleatorio()), solicitante(solicitante), descricao(descricao),
+      categoria(categoria), prioridade(prioridade), status(Status::ABERTO) {}
 
-// Construtor Padrão
-Chamado::Chamado() {}
-
-// Construtor Parametrizado utilizando Lista de Inicialização
 Chamado::Chamado(int id)
     : id(id),
       solicitante(),
@@ -16,7 +16,31 @@ Chamado::Chamado(int id)
       prioridade(gerarPrioridadeAleatoria()),
       status(gerarStatusAleatorio()) {}
 
-// --- GETTERS ---
+Chamado::Chamado(Status status)
+    : id(gerarIdAleatorio()),
+      solicitante(),
+      descricao(gerarDescricaoAleatoria()),
+      categoria(gerarCategoriaAleatoria()),
+      prioridade(gerarPrioridadeAleatoria()),
+      status(status),
+      historico() {
+    historico.inserir("Chamado aberto no sistema.");
+}
+
+// construtor parametrizado utilizando lista de inicializacao
+Chamado::Chamado()
+    : id(gerarIdAleatorio()),
+      solicitante(),
+      descricao(gerarDescricaoAleatoria()),
+      categoria(gerarCategoriaAleatoria()),
+      prioridade(gerarPrioridadeAleatoria()),
+      status(gerarStatusAleatorio()),
+      historico()
+       {
+        historico.inserir("Chamado aberto no sistema.");
+       }
+
+// getters
 
 int Chamado::getId() const {
     return id;
@@ -44,7 +68,7 @@ Status Chamado::getStatus() const {
 ListaHistorico& Chamado::getHistorico() {
     return historico;
 }
-// --- SETTERS ---
+// setters
 
 void Chamado::setId(int id) {
     this->id = id;
@@ -81,6 +105,12 @@ void Chamado::imprimir() const {
     std::cout << "========================================" << std::endl;
 }
 
+void Chamado::imprimirHistorico() const {
+    std::cout << "----------- HISTÓRICO DO CHAMADO #" << id << " -----------" << std::endl;
+    historico.listarHistorico();
+    std::cout << "-------------------------------------------------" << std::endl;
+}
+
 
 
 string Chamado::gerarDescricaoAleatoria() {
@@ -100,7 +130,7 @@ Categoria Chamado::gerarCategoriaAleatoria() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(
-        0, static_cast<int>(Categoria::OUTROS));
+        0, static_cast<int>(Categoria::ACESSO));
     return static_cast<Categoria>(dist(gen));
 }
 
@@ -115,18 +145,27 @@ Prioridade Chamado::gerarPrioridadeAleatoria() {
 Status Chamado::gerarStatusAleatorio() {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, 3); // Ajuste conforme a quantidade de itens do Enum Status
+    std::uniform_int_distribution<> dist(0, 3); 
     return static_cast<Status>(dist(gen));
 }
 
+int Chamado::gerarIdAleatorio() {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(1000, 9999); 
+    return dist(gen);
+}
 
-// cast dos enums
+
+// conversao dos enums
 
 string Chamado::categoriaParaTexto() const {
     switch (categoria) {
         case Categoria::HARDWARE: return "Hardware";
         case Categoria::SOFTWARE: return "Software";
         case Categoria::REDE:     return "Rede";
+        case Categoria::SISTEMA:  return "Sistema";
+        case Categoria::ACESSO:   return "Acesso";
         default:                  return "Outros";
     }
 }
@@ -145,6 +184,6 @@ string Chamado::statusParaTexto() const {
         case Status::ABERTO:       return "Aberto";
         case Status::EM_ANDAMENTO: return "Em Andamento";
         case Status::RESOLVIDO:    return "Resolvido";
-        default:                   return "Fechado";
+        default:                   return "Cancelado";
     }
 }
