@@ -38,7 +38,16 @@ bool lerEscolha(const char* mensagem, int minimo, int maximo, int& valor) {
     }
 }
 }
-SistemaDeSuporte::SistemaDeSuporte() {}
+SistemaDeSuporte::SistemaDeSuporte() {
+    // IDs aleatorios e distintos, com status aberto, para dados iniciais de teste.
+    for (int i = 0; i < 5; ++i) {
+        Chamado chamado(Status::ABERTO);
+        while (arvore.localizar(chamado.getId()) != nullptr) {
+            chamado.setId(Chamado().getId());
+        }
+        arvore.inserir(chamado);
+    }
+}
 
 void SistemaDeSuporte::exibirMenu() const {
     cout << "\n========================================" << endl;
