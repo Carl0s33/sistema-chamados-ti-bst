@@ -61,6 +61,7 @@ Chamado* FilaChamados::desenfileirar() {
     
     delete temp; // libera apenas o no da fila e nao o chamado que esta na bst
     --quantidade;
+    c->setStatus(Status::RESOLVIDO); // atualiza o status do chamado para "Resolvido"
     return c;
 }
 
