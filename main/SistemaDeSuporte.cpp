@@ -37,6 +37,17 @@ bool lerEscolha(const char* mensagem, int minimo, int maximo, int& valor) {
         std::cout << "Erro: Escolha um numero de " << minimo << " a " << maximo << ".\n";
     }
 }
+
+const char* statusParaTexto(Status status) {
+    switch (status) {
+        case Status::ABERTO: return "Aberto";
+        case Status::EM_ESPERA: return "Em espera";
+        case Status::EM_ANDAMENTO: return "Em andamento";
+        case Status::RESOLVIDO: return "Resolvido";
+        case Status::CANCELADO: return "Cancelado";
+    }
+    return "Desconhecido";
+}
 }
 SistemaDeSuporte::SistemaDeSuporte() {
     // IDs aleatorios e distintos, com status aberto, para dados iniciais de teste.
@@ -235,16 +246,21 @@ void SistemaDeSuporte::executar() {
                     cout << "Chamado nao encontrado!" << endl;
                     break;
                 }
-                if (!lerEscolha("Novo status: 1. Aberto  2. Em atendimento  3. Resolvido  4. Cancelado\nEscolha: ", 1, 4, escolha)) return;
-                Status novoStatus = static_cast<Status>(escolha - 1);
+                if (!lerEscolha("Novo status: 1. Aberto  2. Em espera  3. Em andamento  4. Resolvido  5. Cancelado\nEscolha: ", 1, 5, escolha)) return;
+                const Status statusDisponiveis[] = {
+                    Status::ABERTO,
+                    Status::EM_ESPERA,
+                    Status::EM_ANDAMENTO,
+                    Status::RESOLVIDO,
+                    Status::CANCELADO
+                };
+                Status novoStatus = statusDisponiveis[escolha - 1];
                 if (c->getStatus() == novoStatus) {
                     cout << "O chamado ja possui esse status." << endl;
                     break;
                 }
-                const char* nomes[] = {"Aberto", "Em atendimento", "Resolvido", "Cancelado"};
-                string registro = string("Status alterado de ") + nomes[static_cast<int>(c->getStatus())]
-                    + " para " + nomes[escolha - 1] + ".";
-                c->getHistorico().inserir( registro);
+                string registro = string("Status alterado para ") + statusParaTexto(novoStatus) + ".";
+                c->getHistorico().inserir(registro);
                 c->setStatus(novoStatus);
                 cout << "Status do chamado #" << id << " alterado com sucesso!" << endl;
                 break;
