@@ -13,7 +13,7 @@ namespace {
 
 
 bool lerInteiro(int& valor) {
-    // ler a linha inteira evita sobrar lixo no buffer para a proxima pergunta
+  
     std::string linha;
     if (!std::getline(std::cin, linha)) return false;
     std::istringstream entrada(linha);
@@ -26,7 +26,7 @@ bool lerInteiro(int& valor) {
 }
 
 bool lerEscolha(const char* mensagem, int minimo, int maximo, int& valor) {
-    // o usuario pode errar e a funcao insiste ate receber uma opcao valida
+   
     while (true) {
         std::cout << mensagem;
         if (!lerInteiro(valor)) {
@@ -50,7 +50,7 @@ const char* statusParaTexto(Status status) {
 }
 }
 SistemaDeSuporte::SistemaDeSuporte() {
-    // IDs aleatorios e distintos, com status aberto, para dados iniciais de teste.
+   
     for (int i = 0; i < 5; ++i) {
         Chamado chamado(Status::ABERTO);
         while (arvore.localizar(chamado.getId()) != nullptr) {
@@ -97,8 +97,7 @@ void SistemaDeSuporte::executar() {
                 Chamado novoChamado;
                 
                 if (arvore.inserir(novoChamado)) {
-                    // arvore.localizar(novoChamado.getId())->getHistorico().inserir(dataHoraAtual(), "Chamado aberto no sistema.");
-                    // cout << "Chamado #" << novoChamado.getId() << " aberto com sucesso!" << endl;
+                   
                     novoChamado.imprimir();
                 } else {
                     cout << "Erro: Ja existe um chamado com este ID." << endl;
@@ -166,23 +165,23 @@ void SistemaDeSuporte::executar() {
             case 6: {
                 cout << "\n--- Encaminhar Chamado para Atendimento ---" << endl;
 
-                // 1. Mostra as estatísticas da árvore
+                
                 exibirEstatisticas();
 
-                // 2. Só faz sentido pedir a quantidade se houver chamados abertos
+               
                 int abertos = arvore.contarPorStatus(Status::ABERTO);
                 if (abertos == 0) {
                     cout << "\nNao ha chamados abertos para encaminhar." << endl;
                     break;
                 }
 
-                // 3. Pede a quantidade (de 1 até o total de abertos)
+                
                 int quantidade;
                 string mensagem = "\nQuantos chamados deseja encaminhar para a fila (1 a "
                                 + to_string(abertos) + ")? ";
                 if (!lerEscolha(mensagem.c_str(), 1, abertos, quantidade)) return;
 
-                // 4. Enfileira apenas essa quantidade
+                
                 arvore.enfileiraChamados(fila, quantidade);
                 cout << "\n" << quantidade << " chamado(s) encaminhado(s) para a fila." << endl;
                 break;
@@ -234,7 +233,7 @@ void SistemaDeSuporte::executar() {
             }
             case 9: {
                 cout << "\n--- Alterar Status ---" << endl;
-                // o historico registra a mudanca antes de trocar o estado atual
+
                 int id, escolha;
                 cout << "Digite o ID do chamado: ";
                 if (!lerInteiro(id)) {

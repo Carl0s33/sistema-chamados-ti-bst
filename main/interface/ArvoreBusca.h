@@ -3,7 +3,7 @@
 
 #include "Chamado.h"
 #include "FilaChamados.h"
-//esqueeda é menor e direta é maior
+//esquerda é menor e direta é maior
 
 struct NoBST {
     Chamado chamado;
