@@ -13,7 +13,7 @@ namespace {
 
 
 bool lerInteiro(int& valor) {
-    // ler a linha inteira evita sobrar lixo no buffer para a proxima pergunta
+  
     std::string linha;
     if (!std::getline(std::cin, linha)) return false;
     std::istringstream entrada(linha);
@@ -26,7 +26,7 @@ bool lerInteiro(int& valor) {
 }
 
 bool lerEscolha(const char* mensagem, int minimo, int maximo, int& valor) {
-    // o usuario pode errar e a funcao insiste ate receber uma opcao valida
+   
     while (true) {
         std::cout << mensagem;
         if (!lerInteiro(valor)) {
@@ -37,9 +37,20 @@ bool lerEscolha(const char* mensagem, int minimo, int maximo, int& valor) {
         std::cout << "Erro: Escolha um numero de " << minimo << " a " << maximo << ".\n";
     }
 }
+
+const char* statusParaTexto(Status status) {
+    switch (status) {
+        case Status::ABERTO: return "Aberto";
+        case Status::EM_ESPERA: return "Em espera";
+        case Status::EM_ANDAMENTO: return "Em andamento";
+        case Status::RESOLVIDO: return "Resolvido";
+        case Status::CANCELADO: return "Cancelado";
+    }
+    return "Desconhecido";
+}
 }
 SistemaDeSuporte::SistemaDeSuporte() {
-    // IDs aleatorios e distintos, com status aberto, para dados iniciais de teste.
+   
     for (int i = 0; i < 5; ++i) {
         Chamado chamado(Status::ABERTO);
         while (arvore.localizar(chamado.getId()) != nullptr) {
@@ -71,6 +82,7 @@ void SistemaDeSuporte::executar() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     int opcao = -1;
+    Chamado* chamadoEmAtendimento = nullptr; 
 
     do {
         exibirMenu();
@@ -85,8 +97,7 @@ void SistemaDeSuporte::executar() {
                 Chamado novoChamado;
                 
                 if (arvore.inserir(novoChamado)) {
-                    // arvore.localizar(novoChamado.getId())->getHistorico().inserir(dataHoraAtual(), "Chamado aberto no sistema.");
-                    // cout << "Chamado #" << novoChamado.getId() << " aberto com sucesso!" << endl;
+                   
                     novoChamado.imprimir();
                 } else {
                     cout << "Erro: Ja existe um chamado com este ID." << endl;
@@ -154,38 +165,52 @@ void SistemaDeSuporte::executar() {
             case 6: {
                 cout << "\n--- Encaminhar Chamado para Atendimento ---" << endl;
 
-                // 1. Mostra as estatísticas da árvore
+                
                 exibirEstatisticas();
 
-                // 2. Só faz sentido pedir a quantidade se houver chamados abertos
+               
                 int abertos = arvore.contarPorStatus(Status::ABERTO);
                 if (abertos == 0) {
                     cout << "\nNao ha chamados abertos para encaminhar." << endl;
                     break;
                 }
 
-                // 3. Pede a quantidade (de 1 até o total de abertos)
+                
                 int quantidade;
                 string mensagem = "\nQuantos chamados deseja encaminhar para a fila (1 a "
                                 + to_string(abertos) + ")? ";
                 if (!lerEscolha(mensagem.c_str(), 1, abertos, quantidade)) return;
 
-                // 4. Enfileira apenas essa quantidade
+                
                 arvore.enfileiraChamados(fila, quantidade);
                 cout << "\n" << quantidade << " chamado(s) encaminhado(s) para a fila." << endl;
                 break;
             }
             case 7: {
                 cout << "\n--- Atender Proximo Chamado ---" << endl;
-                Chamado* c = fila.desenfileirar();
-                if (c != nullptr) {
-                    c->setStatus(Status::EM_ANDAMENTO);
-                    cout << "Tecnico iniciou o atendimento do chamado #" << c->getId() << endl;
-                    c->getHistorico().inserir("Tecnico iniciou o atendimento.");
-                    c->imprimir();
-                } else {
+
+                Chamado* proximo = fila.desenfileirar();
+                if (proximo == nullptr) {
                     cout << "A fila de atendimento esta vazia!" << endl;
+                    break;
                 }
+
+                if (chamadoEmAtendimento != nullptr) {
+                    chamadoEmAtendimento->setStatus(Status::RESOLVIDO);
+                    chamadoEmAtendimento->getHistorico().inserir(
+                        "Atendimento finalizado ao iniciar o proximo chamado."
+                    );
+                }
+
+                chamadoEmAtendimento = proximo;
+                chamadoEmAtendimento->setStatus(Status::EM_ANDAMENTO);
+                chamadoEmAtendimento->getHistorico().inserir(
+                    "Tecnico iniciou o atendimento."
+                );
+
+                cout << "Tecnico iniciou o atendimento do chamado #"
+                    << chamadoEmAtendimento->getId() << endl;
+                chamadoEmAtendimento->imprimir();
                 break;
             }
             case 8: {
@@ -208,7 +233,7 @@ void SistemaDeSuporte::executar() {
             }
             case 9: {
                 cout << "\n--- Alterar Status ---" << endl;
-                // o historico registra a mudanca antes de trocar o estado atual
+
                 int id, escolha;
                 cout << "Digite o ID do chamado: ";
                 if (!lerInteiro(id)) {
@@ -220,16 +245,21 @@ void SistemaDeSuporte::executar() {
                     cout << "Chamado nao encontrado!" << endl;
                     break;
                 }
-                if (!lerEscolha("Novo status: 1. Aberto  2. Em atendimento  3. Resolvido  4. Cancelado\nEscolha: ", 1, 4, escolha)) return;
-                Status novoStatus = static_cast<Status>(escolha - 1);
+                if (!lerEscolha("Novo status: 1. Aberto  2. Em espera  3. Em andamento  4. Resolvido  5. Cancelado\nEscolha: ", 1, 5, escolha)) return;
+                const Status statusDisponiveis[] = {
+                    Status::ABERTO,
+                    Status::EM_ESPERA,
+                    Status::EM_ANDAMENTO,
+                    Status::RESOLVIDO,
+                    Status::CANCELADO
+                };
+                Status novoStatus = statusDisponiveis[escolha - 1];
                 if (c->getStatus() == novoStatus) {
                     cout << "O chamado ja possui esse status." << endl;
                     break;
                 }
-                const char* nomes[] = {"Aberto", "Em atendimento", "Resolvido", "Cancelado"};
-                string registro = string("Status alterado de ") + nomes[static_cast<int>(c->getStatus())]
-                    + " para " + nomes[escolha - 1] + ".";
-                c->getHistorico().inserir( registro);
+                string registro = string("Status alterado para ") + statusParaTexto(novoStatus) + ".";
+                c->getHistorico().inserir(registro);
                 c->setStatus(novoStatus);
                 cout << "Status do chamado #" << id << " alterado com sucesso!" << endl;
                 break;

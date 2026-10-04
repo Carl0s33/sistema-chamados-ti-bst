@@ -28,7 +28,7 @@ ListaHistorico& ListaHistorico::operator=(const ListaHistorico& outra) {
 }
 
 ListaHistorico::~ListaHistorico() {
-    // cada registro foi criado com new entao a lista limpa um por um aqui
+    
     NoHistorico* atual = inicio;
     while (atual != nullptr) {
         NoHistorico* proximo = atual->getProximo();
@@ -38,11 +38,11 @@ ListaHistorico::~ListaHistorico() {
 }
 
 void ListaHistorico::inserir(std::string descricao) {
-    // Pega a data/hora atual
+    
     std::time_t agora = std::time(nullptr);
     std::tm* tempoLocal = std::localtime(&agora);
 
-    // Formata como "dd/mm/aaaa HH:MM:SS"
+    
     char buffer[20];
     std::strftime(buffer, sizeof(buffer), "%d/%m/%Y %H:%M:%S", tempoLocal);
     std::string dataHorario(buffer);

@@ -27,7 +27,7 @@ Chamado::Chamado(Status status)
     historico.inserir("Chamado aberto no sistema.");
 }
 
-// construtor parametrizado utilizando lista de inicializacao
+
 Chamado::Chamado()
     : id(gerarIdAleatorio()),
       solicitante(),
