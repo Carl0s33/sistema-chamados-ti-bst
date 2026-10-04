@@ -16,9 +16,9 @@ bool FilaChamados::estaVazia() const {
     return frente == nullptr;
 }
 
-// coloca o chamado no fim da fila pra esperar a vez dele
+
 bool FilaChamados::enfileirar(Chamado* c) {
-    // so entra quem esta aberto e ainda nao esta esperando na fila
+   
     if (c == nullptr || c->getStatus() != Status::ABERTO) {
         return false;
     }
@@ -42,9 +42,9 @@ bool FilaChamados::enfileirar(Chamado* c) {
     return true;
 }
 
-// tira o primeiro da fila e devolve nulo se ela estiver vazia
+
 Chamado* FilaChamados::desenfileirar() {
-    // fifo de verdade sai sempre o primeiro que entrou
+   
     if (estaVazia()) {
         return nullptr;
     }
@@ -54,18 +54,18 @@ Chamado* FilaChamados::desenfileirar() {
     
     frente = frente->getProximo();
     
-    // se a fila ficou vazia depois de remover o elemento ajustamos o tras
+    
     if (frente == nullptr) {
         tras = nullptr;
     }
     
-    delete temp; // libera apenas o no da fila e nao o chamado que esta na bst
+    delete temp; 
     --quantidade;
 
     return c;
 }
 
-// so olha quem e o proximo sem tirar da fila
+
 Chamado* FilaChamados::getFrente() const {
     if (estaVazia()) {
         return nullptr;

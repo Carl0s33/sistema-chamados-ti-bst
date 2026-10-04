@@ -21,12 +21,12 @@ public:
 
     void imprimir() const;
 
-    // getters
+   
     std::string getNome() const;
     std::string getMatricula() const;
     tipoSolicitante getTipo() const;
 
-    // setters
+
     void setNome(const std::string& nome);
     void setMatricula(const std::string& matricula);
     void setTipo(tipoSolicitante tipo);

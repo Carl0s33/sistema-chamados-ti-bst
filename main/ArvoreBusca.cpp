@@ -23,7 +23,7 @@ void ArvoreBusca::destruirArvore(NoBST* no) {
     delete no;
 }
 
-// vai procurando um lugar pelo id e nao deixa entrar id repetido
+
  NoBST* ArvoreBusca::inserirRecursivo(NoBST* no, const Chamado& chamado, bool& inserido) {
     if (no == nullptr) {
         inserido = true;
@@ -41,7 +41,7 @@ void ArvoreBusca::destruirArvore(NoBST* no) {
  }
 
 bool ArvoreBusca::inserir(Chamado chamado) {
-    // a arvore guarda a copia principal do chamado e a fila aponta para ela depois
+
     bool inserido = false;
     this->raiz = inserirRecursivo(this->raiz, chamado, inserido);
     return inserido;
@@ -60,7 +60,7 @@ NoBST* ArvoreBusca::localizarRecursivo(NoBST* no, int id) const {
 }
 
 Chamado* ArvoreBusca::localizar(int id) {
-    // a busca so devolve o resultado e quem decide a mensagem e o menu
+    
     NoBST* no = localizarRecursivo(this->raiz, id);
     if (no != nullptr) {
         return &(no->chamado);
@@ -194,7 +194,7 @@ Chamado* ArvoreBusca::obterMaiorIdentificador() {
 }
 
 int ArvoreBusca::calcularAlturaRecursivo(NoBST* no) const {
-    // uma arvore vazia tem altura -1 assim uma folha fica com altura zero
+   
     if (no == nullptr) return -1;
 
     int alturaEsq = calcularAlturaRecursivo(no->esquerda);
@@ -270,7 +270,7 @@ void ArvoreBusca::percursoPosOrdem() {
     std::cout << "\n";
 }
 
-// usa uma fila pra mostrar um nivel da arvore de cada vez
+
 void ArvoreBusca::percursoEmLargura() {
     if (raiz == nullptr) {
         std::cout << "Arvore vazia.\n";
@@ -306,28 +306,28 @@ void ArvoreBusca::posOrdemRecursivo(NoBST* no) const {
 
 
 void ArvoreBusca::enfileiraChamadoRecursivo(NoBST* no, FilaChamados& filaDeAtendimento, int& restante) const {
-    // Para se chegou ao fim da árvore ou já enfileirou a quantidade pedida
+   
     if (no == nullptr || restante <= 0) {
         return;
     }
 
-    // Percorrer a subárvore esquerda
+   
     enfileiraChamadoRecursivo(no->esquerda, filaDeAtendimento, restante);
 
-    // Só enfileira se ainda houver cota e o chamado estiver ABERTO
+
     if (restante > 0 && no->chamado.getStatus() == Status::ABERTO) {
         filaDeAtendimento.enfileirar(&(no->chamado));
         std::cout << "Chamado enfileirado: #" << no->chamado.getId() << "\n";
         no->chamado.getHistorico().inserir("Chamado enfileirado para atendimento.");
         no->chamado.setStatus(Status::EM_ESPERA);
-        restante--;   // consumiu uma vaga
+        restante--;   
     }
 
-    // Percorrer a subárvore direita
+   
     enfileiraChamadoRecursivo(no->direita, filaDeAtendimento, restante);
 }
 
-// Método principal para iniciar o carregamento da fila
+
 void ArvoreBusca::enfileiraChamados(FilaChamados& filaDeAtendimento, int quantidade) const {
     int restante = quantidade;
     enfileiraChamadoRecursivo(this->raiz, filaDeAtendimento, restante);
