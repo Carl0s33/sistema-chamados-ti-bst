@@ -71,6 +71,7 @@ void SistemaDeSuporte::executar() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     int opcao = -1;
+    Chamado* chamadoEmAtendimento = nullptr; 
 
     do {
         exibirMenu();
@@ -177,15 +178,29 @@ void SistemaDeSuporte::executar() {
             }
             case 7: {
                 cout << "\n--- Atender Proximo Chamado ---" << endl;
-                Chamado* c = fila.desenfileirar();
-                if (c != nullptr) {
-                    c->setStatus(Status::EM_ANDAMENTO);
-                    cout << "Tecnico iniciou o atendimento do chamado #" << c->getId() << endl;
-                    c->getHistorico().inserir("Tecnico iniciou o atendimento.");
-                    c->imprimir();
-                } else {
+
+                Chamado* proximo = fila.desenfileirar();
+                if (proximo == nullptr) {
                     cout << "A fila de atendimento esta vazia!" << endl;
+                    break;
                 }
+
+                if (chamadoEmAtendimento != nullptr) {
+                    chamadoEmAtendimento->setStatus(Status::RESOLVIDO);
+                    chamadoEmAtendimento->getHistorico().inserir(
+                        "Atendimento finalizado ao iniciar o proximo chamado."
+                    );
+                }
+
+                chamadoEmAtendimento = proximo;
+                chamadoEmAtendimento->setStatus(Status::EM_ANDAMENTO);
+                chamadoEmAtendimento->getHistorico().inserir(
+                    "Tecnico iniciou o atendimento."
+                );
+
+                cout << "Tecnico iniciou o atendimento do chamado #"
+                    << chamadoEmAtendimento->getId() << endl;
+                chamadoEmAtendimento->imprimir();
                 break;
             }
             case 8: {
