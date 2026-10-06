@@ -120,7 +120,7 @@ NoBST* ArvoreBusca::removerRecursivo(NoBST* no, int id, bool& removido) {
 }
 
 bool ArvoreBusca::remover(int identificador) {
-    // a recursao reconecta os filhos para a bst nao perder nenhum galho
+  
     bool removido = false;
     this->raiz = removerRecursivo(this->raiz, identificador, removido);
     return removido;
